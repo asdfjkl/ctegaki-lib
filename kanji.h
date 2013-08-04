@@ -14,10 +14,10 @@ struct kanji {
 	int *c_points;
 };
 
-void print_kanji(kanji *k);
+void print_kanji(kanji k);
 
-size_t get_size(kanji *k);
+size_t get_size(kanji k);
 
-void serialize_kanji(kanji *k, char* buffer);
+void serialize_kanji(kanji k, char* buffer);
 
 #endif 

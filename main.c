@@ -3,7 +3,7 @@
 #include "xml.h"
 #include "binary.h"
 #include "kanji.h"
-
+#include "kanjis.h";
 
 int main()
 {
@@ -14,24 +14,16 @@ int main()
 	// kanji ka[1] = { k }; 
 	// int j = write_bin_file(ka, "data");
 	// printf("hex: %s, %i\n",test, k.xy[0][0].x);
-	printf("loaded\n");
-	print_kanji(&k);
-	size_t buf_len = get_size(&k);
-	char* buffer = (char *)malloc(buf_len);
-	printf("serializing...\n");
-	serialize_kanji(&k, buffer);
-	// printf("%s\n",*buffer);
-	printf("done, buf_len: %i\n",buf_len);
-	FILE* fp = fopen("data.dat", "wb+");
-	if(fp == NULL) { 
-		printf ("error opening file\n"); 
-		return 1;
-	}
-	// todo: some error handling when writing to file
-	fwrite(buffer, buf_len, 1, fp);
-	// don't forget to take out the garbage
-	printf("wrote buffer to file\n");
-	fclose(fp);
-	// free(buffer);
+	printf("loaded from xml\n");
+	print_kanji(k);
+	kanjis kjs;
+	kjs.count = 1;
+	kjs.arr = (kanji*) malloc(kjs.count * sizeof(kanji));
+	kjs.arr[0] = k;
+	write_bin_file(kjs,"data.dat");
+	printf("wrote file to disk\n");
+	kanjis l = read_bin_file("data.dat");
+	printf("read following file from disk:\n");
+	print_kanji(l.arr[0]);
 	return 0;
 }
