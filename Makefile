@@ -27,7 +27,7 @@ LFLAGS = -L./lib
 LIBS = -lezxml 
 
 # define the C source files
-SRCS = main.c xml.c binary.c kanji.c
+SRCS = main.c xml.c binary.c moment.c globals.c kanji.c 
 
 # define the C object files 
 #
