@@ -1,4 +1,5 @@
 #include <stdint.h>
+#include <stdlib.h>
 
 #ifndef _KANJI_H_
 #define _KANJI_H_
@@ -19,5 +20,7 @@ void print_kanji(kanji k);
 size_t get_size(kanji k);
 
 void serialize_kanji(kanji k, char* buffer);
+
+void transform_kanji(kanji k, int add_x, int add_y);
 
 #endif 

@@ -55,3 +55,12 @@ void serialize_kanji(kanji k, char* buffer) {
 
 	}
 }
+
+void transform_kanji(kanji k, int add_x, int add_y) {
+    for(int i=0;i<k.c_strokes;i++) {
+            for(int j=0;j<k.c_points[i];j++) {
+                    k.xy[i][j].x = k.xy[i][j].x + add_x;
+                    k.xy[i][j].y = k.xy[i][j].y + add_y;
+            }
+    }
+}
