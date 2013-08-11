@@ -5,6 +5,7 @@
 #include "kanji.h"
 #include "kanjis.h";
 #include "globals.h";
+#include "normalize.h";
 
 int main()
 {
@@ -29,5 +30,8 @@ int main()
         printf("extract features:\n");
         kanji e = extract_features(l.arr[0], INTERVAL);
         print_kanji(e);
+        moment(k);
+        printf("moment normalization:\n");
+        print_kanji(k);
 	return 0;
 }
