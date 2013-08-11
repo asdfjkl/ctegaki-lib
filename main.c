@@ -4,6 +4,7 @@
 #include "binary.h"
 #include "kanji.h"
 #include "kanjis.h";
+#include "globals.h";
 
 int main()
 {
@@ -25,5 +26,8 @@ int main()
 	kanjis l = read_bin_file("data.dat");
 	printf("read following file from disk:\n");
 	print_kanji(l.arr[0]);
+        printf("extract features:\n");
+        kanji e = extract_features(l.arr[0], INTERVAL);
+        print_kanji(e);
 	return 0;
 }

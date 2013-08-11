@@ -23,4 +23,6 @@ void serialize_kanji(kanji k, char* buffer);
 
 void transform_kanji(kanji k, int add_x, int add_y);
 
+kanji extract_features(kanji k, float interval);
+
 #endif 
