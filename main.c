@@ -33,5 +33,7 @@ int main()
         moment(k);
         printf("moment normalization:\n");
         print_kanji(k);
+        kjs.arr[0] = e;
+        write_bin_file(kjs,"data.dat");
 	return 0;
 }
