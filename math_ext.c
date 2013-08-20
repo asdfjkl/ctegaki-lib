@@ -11,7 +11,7 @@ int abs(int x) {
 int manhatten(int x0, int y0, int x1, int y1) {
     int xdist = abs(x1-x0);
     int ydist = abs(y1-y0);
-    
+    return xdist + ydist;
 }
 
 float euclid(int x0, int y0, int x1, int y1) {

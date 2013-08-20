@@ -12,7 +12,7 @@ int main()
 	char test[] = "abc";
 	char test1[]  = "cd";
 	kanji k;
-	read_xml_file("4e86.xml", &k, test);
+	read_xml_file("4e86.xml", &k);
 	// kanji ka[1] = { k }; 
 	// int j = write_bin_file(ka, "data");
 	// printf("hex: %s, %i\n",test, k.xy[0][0].x);
