@@ -10,6 +10,7 @@ struct point {
 };
 
 struct kanji {
+        wchar_t kji;
 	point **xy;
 	int c_strokes;
 	int *c_points;
@@ -26,19 +27,21 @@ void print_kanji(kanji k) {
 
 size_t get_size(kanji k) {
         // count no of all points in kanji
-        // and allocate buffer with appropriate size
+        // (to allocate buffer with appropriate size)
         int c_points = 0;
         for(int i=0;i<k.c_strokes;i++) {
                 for(int j=0;j<k.c_points[i];j++) {
  			c_points++;
                 }
         }
-	return (c_points * sizeof(point)) + ((k.c_strokes +1) * sizeof(int));
+	return (c_points * sizeof(point)) + 
+                ((k.c_strokes +1) * sizeof(int)) +  // for #strokes and #points
+                (sizeof(wchar_t));                  // for kanji itself
 }
 
 // caller has to ensure that buffer is of appropriate length
 void serialize_kanji(kanji k, char* buffer) {
-	// first write no of strokes, then for each
+	// first write no of strokes, then wchar, then for each
 	// stroke, write number of points, then all points
 	// for that stroke
 	// i.e. to ensure we can desiralize to struct of type
@@ -46,6 +49,8 @@ void serialize_kanji(kanji k, char* buffer) {
 	int seeker = 0;
 	memcpy(&buffer[seeker], &(k.c_strokes), sizeof(int));
 	seeker += sizeof(int);
+        memcpy(&buffer[seeker], &(k.kji), sizeof(wchar_t));
+        seeker += sizeof(wchar_t);
 	for(int i=0;i<k.c_strokes;i++) {
 		memcpy(&buffer[seeker], &(k.c_points[i]), sizeof(int));
 		seeker += sizeof(int);
@@ -146,10 +151,10 @@ kanji extract_features(kanji k, float interval) {
         float dist = stroke_dist(k, i);
 
         float best_interv = best_interval_size(dist, interval);
-        printf("optimal interval: %f\n",best_interv);
+        // printf("optimal interval: %f\n",best_interv);
         int cnt = count_extract_points(k, i, best_interv);
         e.c_points[i] = cnt;
-        printf("cnt: %i\n",cnt);
+        // printf("cnt: %i\n",cnt);
         // reserve space for new kanji
         temp[i] = (point*) malloc(e.c_points[i] * sizeof(point*));
 	// add points at intervals

@@ -10,6 +10,7 @@ struct point {
 };
 
 struct kanji {
+        wchar_t kji;
 	point **xy;
 	int c_strokes;
 	int *c_points;
