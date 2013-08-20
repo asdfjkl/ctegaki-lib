@@ -45,6 +45,8 @@ void read_xml_file(char filename[], kanji* k) {
 
     for (xml_stroke = ezxml_child(xml_kanji, "unicode"); xml_stroke; xml_stroke = xml_stroke->next) {
         char* utf_hex = xml_stroke->txt;
+        // printf("utf8: %s\n",utf_hex);
+        // wchar_t wc = strtol("4e86", NULL, 16);
         wchar_t wc = strtol(utf_hex, NULL, 16);
         (*k).kji = wc;
         // setlocale(LC_ALL, "de_DE.UTF-8");

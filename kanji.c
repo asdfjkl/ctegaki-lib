@@ -144,6 +144,7 @@ int count_extract_points(kanji k, int i, float interval) {
 kanji extract_features(kanji k, float interval) {
     kanji e;
     e.c_strokes = k.c_strokes;
+    e.kji = k.kji;
     e.c_points = (int*) malloc(e.c_strokes*sizeof(int));
     point** temp = (point**) malloc(e.c_strokes * sizeof(point*));
     for(int i=0;i<k.c_strokes;i++) {
