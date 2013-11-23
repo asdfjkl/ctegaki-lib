@@ -21,14 +21,17 @@ bbox make_bbox(kanji k) {
 	b.y1 = 0;
 	for(int i=0;i<k.c_strokes;i++) {
 		for(int j=0;j<k.c_points[i];j++) {
-			int x = k.xy[i][j].x;
-			int y = k.xy[i][j].y;
-			if(x < b.x0) { b.x0 = x; }
+			int x = (int) k.xy[i][j].x;
+			int y = (int) k.xy[i][j].y;
+                  	if(x < b.x0) { b.x0 = x; }
 			if(x > b.x1) { b.x1 = x; }
 			if(y < b.y0) { b.y0 = y; }
 			if(y > b.y1) { b.y1 = y; }	
 		}
 	}
+        printf("bb0 %i %i %i %i",b.x0,b.x1,b.y0,b.y1);
+        b.heigth = b.y1 - b.y0;
+        b.width = b.x1 - b.x0;
         return b;
 }
 
@@ -96,7 +99,7 @@ float aran(int width, int height) {
 	
 void moment_normalize(kanji k, bbox b, int new_w, int new_h) {
 	float r2 = aran(b.width, b.heigth);
-	// System.out.println("r2: "+r2);
+	printf("r2: %f\n",r2);
 		
 	int aran_w = new_w;
 	int aran_h = new_h;
@@ -106,41 +109,41 @@ void moment_normalize(kanji k, bbox b, int new_w, int new_h) {
 	} else {
 		aran_h = (int) (r2 *(float) new_h);
 	}		
-	// System.out.println("aran width "+aranWidth + " aran Height "+aranHeight);
+	printf("aran width %i and heigth %i\n", aran_w, aran_h);
 	
         
 	int x_offset = (new_w - aran_w)/2;
 	int y_offset = (new_h - aran_h)/2; 
 		
-	// System.out.println("xOffset: "+xOffset);
+	printf("xOffset %i and yoffset %i\n",x_offset,y_offset);
 	// System.out.println("yOffset: "+yOffset);
 
 	float m00 = (float) f_m00(k);
 	float m01 = (float) f_m01(k);
 	float m10 = (float) f_m10(k);
 		
-	// System.out.println("m00: "+m00+" m01: "+m01+" m10 "+m10);
+	printf("m00: %f m01 %f m10 %f\n",m00,m01,m10);
 		
 	int xc = (int) (m10/m00);
 	int yc = (int) (m01/m00);
 		
-	// System.out.println("xc: "+xc+" yc: "+yc);
+	printf("xc: %i + yc %i\n",xc,yc);
 		
 	int xc_ = aran_w/2;
 	int yc_ = aran_h/2;
 		
-	// System.out.println("xc_: "+xc_+" yc_: "+yc_);
+	printf("xc_: %i + yc %i\n",xc_,yc_);
 		
 	float mu20 = (float) f_mu20(k, xc);
 	float mu02 = (float) f_mu02(k, yc);
 
-	// System.out.println("mu20: "+mu20+" mu02: "+mu02);
+	printf("mu20: %i mu02 %i",mu20,mu02);
 				
 	// System.out.println("aranWidth"+aranWidth + " rounded "+ ((float)aranWidth ));
 	float alpha = ((float) aran_w) / (4 * (float) sqrtf(mu20/m00));
 	float beta = ((float) aran_h) / (4 * (float) sqrtf(mu02/m00));
 		
-	// System.out.println("alpha: "+alpha+" beta: "+beta);
+	printf("alpha: %f beta %f",alpha,beta);
 		
 	for(int i=0;i<k.c_strokes;i++) {
 		for(int j=0;j<k.c_points[i];j++) {
@@ -157,7 +160,7 @@ void moment_normalize(kanji k, bbox b, int new_w, int new_h) {
 			k.xy[i][j].y = new_y;
 		}
 	}		
-	transform_kanji(k,x_offset,y_offset);
+	// transform_kanji(k,x_offset,y_offset);
 }
 
 void linear_normalize(kanji k, int s_old, int offset_x, int offset_y) {
@@ -225,8 +228,10 @@ void linear(kanji k) {
 	
 void moment(kanji k) {	
 	bbox b = make_bbox(k);
+        printf("b heigth: %i and width %i\n",b.heigth,b.width);
 	if(	b.heigth > 3* b.width ||
 		b.width > 3* b.heigth) {
+            printf("if\n");
 		if(b.width > b.heigth) {
 			linear_normalize(k,b.width, b.x0, b.y0);
 		} else {
