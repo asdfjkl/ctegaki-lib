@@ -8,6 +8,7 @@
 #include "normalize.h";
 #include <wchar.h>
 #include <locale.h>
+#include "distance.h"
 
 int main()
 {
@@ -15,11 +16,15 @@ int main()
 	char test1[]  = "cd";
 	kanji k;
 	read_xml_file("4e86.xml", &k);
+        kanji ek = extract_features(k,INTERVAL);
+        print_kanji(k);
+        printf("dist00 %i 01 %i 10 %i\n",endpoint(k,0,k,0),endpoint(k,0,k,1),endpoint(k,1,k,0));
+        
         // printf("read from disk:\n");
         // print_kanji(k);
-        moment(k);
+        // moment(k);
         printf("normalized:\n");
-        print_kanji(k);
+        // print_kanji(k);
 	setlocale(LC_ALL, "de_DE.UTF-8");
         wprintf(L"read from xml the wchar: %lc \n", k.kji);
         // kanji ka[1] = { k }; 
