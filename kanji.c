@@ -16,14 +16,114 @@ struct kanji {
 	int *c_points;
 };
 
+
+
 void print_kanji(kanji k) {
+    printf("Strokes: %i",k.c_strokes);
 	for(int i=0;i<k.c_strokes;i++) {
-		printf("new stroke\n");
+		printf("new stroke: %i\n",i);
 		for(int j=0;j<k.c_points[i];j++) {
 			printf("x: %i, y: %i\n",k.xy[i][j].x,k.xy[i][j].y);
 		}
 	}
 }
+
+void add_stroke(kanji* k, point* ps, int len) {
+    
+    kanji kn = *k;
+    
+    printf("sizeof ps: %i\n",sizeof(ps));
+    printf("sizeof point: %i\n",sizeof(point));
+    // int len = sizeof(ps) / sizeof(point);
+    
+    printf("p0x %i\n",ps[0].x);
+    printf("p0y %i\n",ps[0].y);
+
+    printf("p1x %i\n",ps[1].x);
+    printf("p1y %i\n",ps[1].y);
+
+    
+    
+    printf("reallocating c_points... \n");
+
+    // increase c_points by one and store length of ps[] in there
+    (*k).c_points = (int*) realloc((*k).c_points, ((*k).c_strokes + 1) * sizeof(int));    
+    (*k).c_points[(*k).c_strokes] = len;
+    
+    printf("c_points at 0: %i\n",(*k).c_points[0]);
+    
+
+    printf("increasing 2d array... \n");
+
+    // increase 2dim array by adding one more space for pointer
+    (*k).xy = (point**) malloc(((*k).c_strokes + 1) * sizeof (point*));
+    
+
+    // insert new array at end
+    (*k).xy[(*k).c_strokes] = ps;
+    
+    printf("k.xy @0 x,y %i,%i and at 1x,y: %i,%i\n",(*k).xy[0][0].x,(*k).xy[0][0].y,
+              (*k).xy[0][1].x, (*k).xy[0][1].y);
+    
+    // we have one more stroke in that kanji
+    (*k).c_strokes++;
+    
+    print_kanji((*k));
+    
+};
+ 
+    
+/*
+    for (xml_stroke = ezxml_child(xml_kanji, "stroke"); xml_stroke; xml_stroke = xml_stroke->next) {
+        int points = count_children(xml_stroke, (char*) "point");
+        temp[i] = (point*) malloc(points * sizeof (point));
+        (*k).c_points[i] = points;
+        int j = 0;
+        for (xml_point = ezxml_child(xml_stroke, "point"); xml_point; xml_point = xml_point->next) {
+            point p;
+            p.x = atoi(ezxml_attr(xml_point, "x"));
+            p.y = atoi(ezxml_attr(xml_point, "y"));
+            temp[i][j] = p;
+            j++;
+        }
+        i++;
+    }
+*/
+
+
+void test_add_stroke() {
+    
+    point p1;
+    p1.x = 1;
+    p1.y = 2;
+    
+    printf("size of p1: %i\n", sizeof(p1));
+    
+    point p2;
+    p2.x = 3;
+    p2.y = 4;
+    
+    printf("size of p2: %i\n", sizeof(p2));
+    
+    point ps[2];
+    ps[0] = p1;
+    ps[1] = p2;
+    
+    printf("size of ps: %i\n", sizeof(ps));
+    
+
+    kanji k;
+    k.c_strokes = 0;
+    k.c_points = (int*) malloc(0);
+    
+    printf("old kanji: \n");
+    print_kanji(k);
+    add_stroke(&k,ps,2);
+    printf("new kanji: \n");
+    print_kanji(k);
+}
+
+
 
 size_t get_size(kanji k) {
         // count no of all points in kanji
