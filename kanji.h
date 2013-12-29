@@ -16,8 +16,7 @@ struct kanji {
 	int *c_points;
 };
 
-
-void add_stroke(kanji k, point* ps, int len);
+void add_stroke(kanji* k, point* ps, int len);
 
 void test_add_stroke(); 
 

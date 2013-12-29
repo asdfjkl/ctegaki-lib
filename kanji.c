@@ -17,60 +17,61 @@ struct kanji {
 };
 
 
-
 void print_kanji(kanji k) {
-    printf("Strokes: %i",k.c_strokes);
+    printf("\nStrokes: %i\n",k.c_strokes);
 	for(int i=0;i<k.c_strokes;i++) {
-		printf("new stroke: %i\n",i);
+		printf("Stroke[%i]: ",i);
 		for(int j=0;j<k.c_points[i];j++) {
-			printf("x: %i, y: %i\n",k.xy[i][j].x,k.xy[i][j].y);
+			printf("(%i,%i) ",k.xy[i][j].x,k.xy[i][j].y);
 		}
+        printf("\n");
 	}
+    printf("\n");
 }
 
 void add_stroke(kanji* k, point* ps, int len) {
     
-    kanji kn = *k;
     
-    printf("sizeof ps: %i\n",sizeof(ps));
-    printf("sizeof point: %i\n",sizeof(point));
-    // int len = sizeof(ps) / sizeof(point);
-    
-    printf("p0x %i\n",ps[0].x);
-    printf("p0y %i\n",ps[0].y);
-
-    printf("p1x %i\n",ps[1].x);
-    printf("p1y %i\n",ps[1].y);
-
+    // printf("sizeof ps: %i\n",sizeof(ps));
+    // printf("sizeof point: %i\n",sizeof(point));
     
     
-    printf("reallocating c_points... \n");
+    
+    // printf("reallocating c_points... \n");
 
     // increase c_points by one and store length of ps[] in there
     (*k).c_points = (int*) realloc((*k).c_points, ((*k).c_strokes + 1) * sizeof(int));    
     (*k).c_points[(*k).c_strokes] = len;
     
-    printf("c_points at 0: %i\n",(*k).c_points[0]);
+    // printf("c_points at 0: %i\n",(*k).c_points[0]);
     
 
-    printf("increasing 2d array... \n");
+    // printf("increasing 2d array... \n");
+    for(int i=0;i<k->c_strokes;i++) {
+        // printf("address of *k.xy[%i]: %i\n",i,k->xy[i]);
+    }
 
     // increase 2dim array by adding one more space for pointer
-    (*k).xy = (point**) malloc(((*k).c_strokes + 1) * sizeof (point*));
-    
+    (*k).xy = (point**) realloc((*k).xy,((*k).c_strokes + 1) * sizeof (point*));
+    // printf("after realloc of 2d array... \n");
+
+    for(int i=0;i<k->c_strokes+1;i++) {
+        // printf("address of *k.xy[%i]: %i\n",i,k->xy[i]);
+    }
+
 
     // insert new array at end
     (*k).xy[(*k).c_strokes] = ps;
     
-    printf("k.xy @0 x,y %i,%i and at 1x,y: %i,%i\n",(*k).xy[0][0].x,(*k).xy[0][0].y,
-              (*k).xy[0][1].x, (*k).xy[0][1].y);
+    // printf("k.xy @0 x,y %i,%i and at 1x,y: %i,%i\n",(*k).xy[0][0].x,(*k).xy[0][0].y,
+     //         (*k).xy[0][1].x, (*k).xy[0][1].y);
     
     // we have one more stroke in that kanji
     (*k).c_strokes++;
     
-    print_kanji((*k));
+    // print_kanji((*k));
     
-};
+}
  
     
 /*
@@ -111,15 +112,34 @@ void test_add_stroke() {
     
     printf("size of ps: %i\n", sizeof(ps));
     
+    point p3;
+    p3.x = 5;
+    p3.y = 6;
+    
+    point p4;
+    p4.x = 7;
+    p4.y = 8;
+    
+    point p5;
+    p5.x = 9;
+    p5.y = 10;
+    
+    point ps1[] = { p3, p4, p5 };
 
     kanji k;
     k.c_strokes = 0;
-    k.c_points = (int*) malloc(0);
+    k.c_points = 0;
+    k.xy = 0;
     
     printf("old kanji: \n");
     print_kanji(k);
     add_stroke(&k,ps,2);
+    add_stroke(&k,ps,2);
     printf("new kanji: \n");
+    print_kanji(k);
+    add_stroke(&k,ps1,3);
+    print_kanji(k);
+    add_stroke(&k,ps,2);
     print_kanji(k);
 }
 

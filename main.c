@@ -56,7 +56,18 @@ int main()
         write_bin_file(kjs,"data.dat");
         wprintf(L"last wchar: %lc \n", kjs.arr[0].kji);
         
-           test_add_stroke();
+        struct point p0;
+        p0.x = 0;
+        p0.y = 1;
+        struct point ps[1];;
+        ps[0] = p0;
+        kanji testkji;
+        testkji.c_strokes = 0;
+        // test_add_stroke();
+        // add_stroke(&testkji,ps,1);
+        // print_kanji(testkji);
+        // test_add_stroke();
+        testWhole();
  
 	return 0;
 }
