@@ -47,8 +47,8 @@ int main()
     int ep1 = endpoint(tep,0,tep,1);
     int ep2 = endpoint(tep,1,tep,0);
     printf("endpoint: 00: %i   01: %i   10: %i \n",ep0,ep1,ep2);
-    int ww = whole(tep,1,tep,0,1);
-    printf("whole whole: %i\n",ww);
+    // int ww = whole(tep,1,tep,0,1);
+    // printf("whole whole: %i\n",ww);
         printf("extract features:\n");
         kanji e = extract_features(l.arr[0], INTERVAL);
         // print_kanji(e);
