@@ -3,9 +3,9 @@
 #include "xml.h"
 #include "binary.h"
 #include "kanji.h"
-#include "kanjis.h";
-#include "globals.h";
-#include "normalize.h";
+#include "kanjis.h"
+#include "globals.h"
+#include "normalize.h"
 #include <wchar.h>
 #include <locale.h>
 #include "distance.h"
