@@ -9,6 +9,7 @@
 #include <wchar.h>
 #include <locale.h>
 #include "distance.h"
+#include "strokemap.h"
 
 int main()
 {   
@@ -17,8 +18,26 @@ int main()
 	kanji k;
 	read_xml_file("4e86.xml", &k);
         kanji ek = extract_features(k,INTERVAL);
-        print_kanji(k);
-        printf("dist00 %i 01 %i 10 %i\n",endpoint(k,0,k,0),endpoint(k,0,k,1),endpoint(k,1,k,0));
+        // print_kanji(k);
+        // printf("dist00 %i 01 %i 10 %i\n",endpoint(k,0,k,0),endpoint(k,0,k,1),endpoint(k,1,k,0));
+        
+        kanji k1;
+        kanji k2;
+        read_xml_file("7272.xml",&k1);
+        read_xml_file("8868.xml",&k2);
+        kanji ek1 = extract_features(k1,INTERVAL);
+        kanji ek2 = extract_features(k2,INTERVAL);
+                printf("start map test:\n");
+
+        print_kanji(ek);
+        print_kanji(ek1);
+        print_kanji(ek2);
+        
+        int (*p_initial) (kanji, int, kanji, int);
+        p_initial = initial;
+        print_smap(get_initial_map(ek1,ek,p_initial));
+        print_smap(get_initial_map(ek2,ek,p_initial));
+        print_smap(get_initial_map(ek1,ek2,p_initial));
         
         // printf("read from disk:\n");
         // print_kanji(k);

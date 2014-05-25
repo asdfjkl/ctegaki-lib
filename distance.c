@@ -114,6 +114,10 @@ int whole(kanji a, int idx_a, kanji b, int begin, int end) {
 }
 
 /*
+ * todo: implement whole_whole mit direction
+ */
+
+/*
  * test cases for the distance calculation whole()
  *
  */
