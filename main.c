@@ -35,9 +35,22 @@ int main()
         
         int (*p_initial) (kanji, int, kanji, int);
         p_initial = initial;
-        print_smap(get_initial_map(ek1,ek,p_initial));
-        print_smap(get_initial_map(ek2,ek,p_initial));
-        print_smap(get_initial_map(ek1,ek2,p_initial));
+        int (*p_whole) (kanji, int, kanji, int, int);
+        p_whole = whole;
+        smap sm1_i = get_initial_map(ek1,ek,p_initial);
+        smap sm1_c = complete_map(sm1_i,ek1,ek,p_whole);
+        print_smap(sm1_i);
+        print_smap(sm1_c);
+
+        smap sm2_i = get_initial_map(ek2,ek,p_initial);
+        smap sm2_c = complete_map(sm2_i,ek2,ek,p_whole);
+        print_smap(sm2_i);
+        print_smap(sm2_c);   
+        
+        smap sm3_i = get_initial_map(ek1,ek2,p_initial);
+        smap sm3_c = complete_map(sm3_i,ek1,ek2,p_whole);
+        print_smap(sm3_i);
+        print_smap(sm3_c);   
         
         // printf("read from disk:\n");
         // print_kanji(k);

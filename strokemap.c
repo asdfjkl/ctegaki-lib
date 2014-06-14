@@ -127,3 +127,86 @@ smap get_initial_map(kanji larger, kanji smaller,
     }
     return sm;
 }
+
+/*
+ *
+ *
+ */
+
+int get_first_assigned_idx(smap sm) {    
+   int i=0;
+   while(i<sm.length && sm.m[i] == -1) {
+     i++;
+   }
+   return i; 
+}
+
+int get_last_assigned_idx(smap sm) {
+    int i=sm.length-1;
+    while(i>=0 && sm.m[i] == -1) {
+        i--;
+    } 
+    return i;
+}
+
+int has_unassigned_idx(smap sm) {
+    for(int i=0;i<sm.length;i++) {
+        if(sm.m[i] == -1) {
+            return true;
+        }
+    }
+    return false;
+}
+
+/*
+ * complete an initialized map w.r.t. to
+ * the provided distance measure
+ */
+smap complete_map(smap sm, kanji larger, kanji smaller,
+        int (*dist) (kanji, int, kanji, int, int)) {
+    
+    if(!has_unassigned_idx(sm)) { return sm; }
+    
+    int fst = get_first_assigned_idx(sm);
+    for(int i=0;i<fst;i++) {
+        sm.m[i] = sm.m[fst];
+    }
+    
+    int lst = get_last_assigned_idx(sm);
+    for(int i=lst+1;i<sm.length;i++) {
+        sm.m[i] = sm.m[lst];
+    }
+    
+    print_smap(sm);
+    for(int i=0;i<sm.length;i++) {
+        if(i+1 < sm.length && sm.m[i+1] == -1) {
+            // we have a situation like this:
+            //   i       i+1   i+2   ...  i+n 
+            //   start   -1    ?     -1   stop
+
+            int start = i;
+            int stop = i+1;
+            while(stop<sm.length && sm.m[stop] == -1) {
+                stop++;
+            }
+            int div = start;
+            int max_dist = 1000000;
+            for(int j=start;j<stop;j++) {
+                printf("j ist: %i\n",j);
+                int d_ab = dist(smaller,sm.m[start],larger,start,j);
+                int d_bc = dist(smaller,sm.m[stop],larger,j+1,stop);
+                if(d_ab + d_bc < max_dist) {
+                    div = j;
+                    max_dist = d_ab + d_bc;
+                }
+            }
+            for(int j=start;j<=div;j++) {
+                sm.m[j] = sm.m[start];
+            }
+            for(int j=div+1;j<stop;j++) {
+                sm.m[j] = sm.m[stop];
+            }
+        } 
+    }
+    return sm;
+}

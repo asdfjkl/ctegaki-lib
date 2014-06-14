@@ -22,6 +22,21 @@ int endpoint(kanji a, int idx_a, kanji b, int idx_b) {
     
 }
 
+int endpoint_conc(kanji a, int idx_a, kanji b, int begin, int end) {
+    
+    int d_xs = abs(a.xy[idx_a][0].x - b.xy[begin][0].x);
+    int d_ys = abs(a.xy[idx_a][0].y - b.xy[begin][0].y);
+    
+    int last_a = a.c_points[idx_a]-1;
+    int last_b = b.c_points[end]-1;
+    
+    int d_xe = abs(a.xy[idx_a][last_a].x - b.xy[end][last_b].x);
+    int d_ye = abs(a.xy[idx_a][last_a].y - b.xy[end][last_b].y);
+    
+    return ((d_xs + d_ys + d_xe + d_ye)/2);
+    
+}
+
 int initial(kanji a, int idx_a, kanji b, int idx_b) {
 		
     int m = a.c_points[idx_a];
