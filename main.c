@@ -10,9 +10,26 @@
 #include <locale.h>
 #include "distance.h"
 #include "strokemap.h"
+#include "recognizer.h"
 
 int main()
 {   
+    
+        setlocale(LC_ALL, "de_DE.UTF-8");
+        kanjis test2 = init("data.dat");
+        wprintf(L"read from disk : %lc ", test2.arr[0].kji);
+        printf("\n");
+        kanji k_test;
+        read_xml_file("4e86.xml", &k_test);
+        wprintf(L"to rec : %lc ", k_test.kji);
+        printf("\n");
+        wchar_t *res = recognize(k_test, test2);
+        for(int i=0;i<10;i++) {
+            wprintf(L"char : %lc ", res[i]);
+        // printf("\n");
+        }
+    
+    
 	char test[] = "abc";
 	char test1[]  = "cd";
 	kanji k;
@@ -77,6 +94,7 @@ int main()
 	kanjis l = read_bin_file("data.dat");
         wprintf(L"read from binary the wchar: %lc \n", l.arr[0].kji);
 	printf("read following file from disk:\n");
+        
 	// print_kanji(l.arr[0]);
     kanji tep = l.arr[0];
     int ep0 = endpoint(tep,0,tep,0);
