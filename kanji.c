@@ -318,3 +318,4 @@ kanji extract_features(kanji k, float interval) {
     e.xy = temp;
     return e;
 }
+

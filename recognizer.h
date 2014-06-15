@@ -9,7 +9,7 @@
 #define	RECOGNIZER_H
 
 kanjis init(char filename[]);
-wchar_t recognize(kanji unknown, kanjis data);
+wchar_t* recognize(kanji unknown, kanjis data);
 
 #ifdef	__cplusplus
 extern "C" {

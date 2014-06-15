@@ -336,3 +336,8 @@ void test_cases() {
 
     
 }
+
+int compute_weight(smap sm, kanji larger, kanji smaller, 
+        int (*dist) (kanji, int, kanji, int, int)) {
+    return 42;
+}
