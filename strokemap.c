@@ -1,7 +1,8 @@
 #include <stdint.h>
 #include <stdlib.h>
-#include<stdio.h>
+#include <stdio.h>
 #include "distance.h"
+#include "xml.h"
 
 struct smap {
     int *m;
@@ -90,8 +91,8 @@ smap get_initial_map(kanji larger, kanji smaller,
     // first initalize, then optimize the
     // initial assignment
     smap sm = make_by_dist(larger, smaller, dist);
-    printf("initial stroke map\n");
-    print_smap(sm);
+    // printf("initial stroke map\n");
+    // print_smap(sm);
 
     // optimize the assignment by iterating
     // several times. Here set to 3
@@ -177,7 +178,7 @@ smap complete_map(smap sm, kanji larger, kanji smaller,
         sm.m[i] = sm.m[lst];
     }
     
-    print_smap(sm);
+    // print_smap(sm);
     for(int i=0;i<sm.length;i++) {
         if(i+1 < sm.length && sm.m[i+1] == -1) {
             // we have a situation like this:
@@ -192,7 +193,7 @@ smap complete_map(smap sm, kanji larger, kanji smaller,
             int div = start;
             int max_dist = 1000000;
             for(int j=start;j<stop;j++) {
-                printf("j ist: %i\n",j);
+                // printf("j ist: %i\n",j);
                 int d_ab = dist(smaller,sm.m[start],larger,start,j);
                 int d_bc = dist(smaller,sm.m[stop],larger,j+1,stop);
                 if(d_ab + d_bc < max_dist) {
@@ -209,4 +210,129 @@ smap complete_map(smap sm, kanji larger, kanji smaller,
         } 
     }
     return sm;
+}
+
+void test_cases() {
+    
+        kanji k2;
+        kanji k21;
+        kanji k22;
+        kanji k23;
+        
+        read_xml_file("k2.xml",&k2);
+        read_xml_file("k21.xml",&k21);
+        read_xml_file("k22.xml",&k22);
+        read_xml_file("k23.xml",&k23);
+        
+        /* skip feature extraction for these 
+         * specially prepared kanji
+         */
+        printf("k2:\n");
+        print_kanji(k2);
+        printf("k21:\n");
+        print_kanji(k21);
+        printf("k22:\n");
+        print_kanji(k22);
+        printf("k23:\n");
+        print_kanji(k23);
+        
+        /* initialize with endpoint distance
+         * and complete with endpoint distance
+         */
+        printf("endpoint initi + endpoint completion\n");
+        
+        int (*p_endpoint) (kanji, int, kanji, int);
+        p_endpoint = endpoint;
+        int (*p_endpoint_conc) (kanji, int, kanji, int, int);
+        p_endpoint_conc = endpoint_conc;
+        
+        smap k21_k2_init = get_initial_map(k21,k2,p_endpoint);
+        printf("k21 vs k2 init:\n");
+        print_smap(k21_k2_init);
+        // should give
+        // 0  1  2 3 
+        // 0 -1 -1 1         
+        smap k21_k2_comp = complete_map(k21_k2_init, k21, k2, p_endpoint_conc);
+        printf("k21 vs k2 completed:\n");
+        print_smap(k21_k2_comp);
+        // should give
+        // 0 1 2 3 
+        // 0 0 1 1   
+                
+        smap k22_k2_init = get_initial_map(k22,k2,p_endpoint);
+        printf("k22 vs k2 init:\n");
+        print_smap(k22_k2_init);
+        // should give
+        // 0  1  2 3 
+        // 0 -1 -1 1
+        smap k22_k2_comp = complete_map(k22_k2_init, k22, k2, p_endpoint_conc);
+        printf("k22 vs k2 completed:\n");
+        print_smap(k22_k2_comp);
+        // should give
+        // 0 1 2 3 
+        // 0 0 0 1   
+        
+        smap k23_k2_init = get_initial_map(k23,k2,p_endpoint);
+        printf("k23 vs k2 init:\n");
+        print_smap(k23_k2_init);
+        // should give
+        // 0  1  2 3 
+        // 0 -1 -1 1   
+        smap k23_k2_comp = complete_map(k23_k2_init, k23, k2, p_endpoint_conc);
+        printf("k23 vs k2 completed:\n");
+        print_smap(k23_k2_comp);
+        // should give
+        // 0  1  2 3 
+        // 0  1  1 1
+        
+        /* initialize with initial distance 
+         * and complete with whole distance
+         */
+        printf("initial + whole completion\n");
+
+        int (*p_initial) (kanji, int, kanji, int);
+        p_initial = initial;
+        int (*p_whole) (kanji, int, kanji, int, int);
+        p_whole = whole;
+        
+        k21_k2_init = get_initial_map(k21,k2,p_initial);
+        printf("k21 vs k2 init:\n");
+        print_smap(k21_k2_init);
+        // should give
+        // 0  1  2 3 
+        // 0 -1 -1 1 
+        k21_k2_comp = complete_map(k21_k2_init, k21, k2, p_whole);
+        printf("k21 vs k2 completed:\n");
+        print_smap(k21_k2_comp);
+        // should give
+        // 0  1  2 3 
+        // 0  0  1 1 
+        
+        k22_k2_init = get_initial_map(k22,k2,p_initial);
+        printf("k22 vs k2 init:\n");
+        print_smap(k22_k2_init);
+        // should give
+        // 0  1  2 3 
+        // 0 -1 -1 1 
+        k22_k2_comp = complete_map(k22_k2_init, k22, k2, p_whole);
+        printf("k22 vs k2 completed:\n");
+        print_smap(k22_k2_comp);
+        // should give
+        // 0  1  2 3 
+        // 0  0  0 1 
+        
+        k23_k2_init = get_initial_map(k23,k2,p_initial);
+        printf("k23 vs k2 init:\n");
+        print_smap(k23_k2_init);
+        // should give
+        // 0  1  2 3 
+        // 0 -1 -1 1 
+        k23_k2_comp = complete_map(k23_k2_init, k23, k2, p_whole);
+        printf("k23 vs k2 completed:\n");
+        print_smap(k23_k2_comp);
+        // should give
+        // 0  1  2 3 
+        // 0  1  1 1 
+
+    
 }

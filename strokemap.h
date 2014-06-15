@@ -13,5 +13,7 @@ smap get_initial_map(kanji larger, kanji smaller,
 smap complete_map(smap sm, kanji larger, kanji smaller,
         int (*dist) (kanji, int, kanji, int, int));
 
+void test_cases();
+
 #endif	/* STROKEMAP_H */
 

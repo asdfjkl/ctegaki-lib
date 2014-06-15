@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE kanji SYSTEM "kanji.dtd">
+<kanji>
+    <unicode>0000</unicode>
+    <stroke>
+        <point x="0" y="15"/>
+        <point x="60" y="15"/>
+    </stroke>
+    <stroke>
+        <point x="170" y="15"/>
+        <point x="180" y="15"/>
+    </stroke>
+    <stroke>
+        <point x="180" y="15"/>
+        <point x="190" y="15"/>
+    </stroke>
+    <stroke>
+        <point x="190" y="15"/>
+        <point x="220" y="15"/>
+    </stroke>
+</kanji>

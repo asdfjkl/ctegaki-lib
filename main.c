@@ -21,6 +21,8 @@ int main()
         // print_kanji(k);
         // printf("dist00 %i 01 %i 10 %i\n",endpoint(k,0,k,0),endpoint(k,0,k,1),endpoint(k,1,k,0));
         
+        test_cases();
+        /*
         kanji k1;
         kanji k2;
         read_xml_file("7272.xml",&k1);
@@ -51,6 +53,8 @@ int main()
         smap sm3_c = complete_map(sm3_i,ek1,ek2,p_whole);
         print_smap(sm3_i);
         print_smap(sm3_c);   
+        
+        */
         
         // printf("read from disk:\n");
         // print_kanji(k);
