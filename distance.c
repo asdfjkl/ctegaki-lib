@@ -5,7 +5,7 @@
 #include "math_ext.h"
 #include "kanji.h"
 
-int min(int a, int b) { return (a < b) ? a : b; }
+// int min(int a, int b) { return (a < b) ? a : b; }
 
 int endpoint(kanji a, int idx_a, kanji b, int idx_b) {
     
@@ -65,6 +65,9 @@ int tau_of_i(int i, int m, int n) {
  *   b.xy[begin], b.xy[begin+1] ... , b.xy[begin+j]
  * len0 = len_b
  * len1 = len_a
+ * 
+ * expects that kanji a and kanji b are not empty, i.e.
+ * contain at least one valid stroke
  */
 int whole(kanji a, int idx_a, kanji b, int begin, int end) {
 

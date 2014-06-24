@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include "distance.h"
 #include "xml.h"
+#include "math_ext.h"
 
 struct smap {
     int *m;
@@ -339,5 +340,57 @@ void test_cases() {
 
 int compute_weight(smap sm, kanji larger, kanji smaller, 
         int (*dist) (kanji, int, kanji, int, int)) {
-    return 42;
+    
+    int weight = 0;
+    int i=0;
+    while(i<larger.c_strokes) {
+        int larger_idx_start = i;
+        int smaller_idx = sm.m[i];
+        while(sm.m[i] == smaller_idx && i < larger.c_strokes) {
+            i++;
+        }
+        i--;
+        int larger_idx_stop = i;
+        weight += dist(smaller, smaller_idx, 
+                larger, larger_idx_start, larger_idx_stop);
+        i++;
+    }
+    return weight;
 }
+
+
+int compute_weight1(smap sm, kanji larger, kanji smaller, 
+        int (*dist) (kanji, int, kanji, int, int)) {
+    
+    int weight = 0;
+    int i=0;
+    while(i<larger.c_strokes) {
+        int larger_idx_start = i;
+        int smaller_idx = sm.m[i];
+        while(sm.m[i] == smaller_idx && i < larger.c_strokes) {
+            i++;
+        }
+        i--;
+        int larger_idx_stop = i;
+        int gamma = 10;
+        if (true) {
+            if (larger_idx_start < larger_idx_stop) { 
+                // combined stroke; 
+                // adjust weight
+                int m = 0;
+                // m: number of points on combined (larger) stroke
+                // n: number of points on smaller stroke
+                for (int k = larger_idx_start; k <= larger_idx_stop; k++) {
+                    m += larger.c_points[k];
+                }
+                int n = smaller.c_points[smaller_idx];
+                gamma = ((max(m, n) * 10) / (min(m, n)))/10;
+            }
+        }
+        weight += gamma * dist(smaller, smaller_idx, 
+                larger, larger_idx_start, larger_idx_stop);
+        i++;
+    }
+    return weight;
+}
+         

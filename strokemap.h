@@ -18,5 +18,8 @@ void test_cases();
 int compute_weight(smap sm, kanji larger, kanji smaller, 
         int (*dist) (kanji, int, kanji, int, int));
 
+int compute_weight1(smap sm, kanji larger, kanji smaller, 
+        int (*dist) (kanji, int, kanji, int, int));
+
 #endif	/* STROKEMAP_H */
 

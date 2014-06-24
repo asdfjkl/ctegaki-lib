@@ -11,6 +11,9 @@
 int abs(int x);
 int manhatten(int x0, int y0, int x1, int y1);
 float euclid(int x0, int y0, int x1, int y1);
+int max(int a, int b);
+int min(int a, int b);
+
 
 #ifdef	__cplusplus
 extern "C" {

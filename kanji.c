@@ -242,7 +242,9 @@ int count_extract_points(kanji k, int i, float interval) {
                 dist += distPoints;
 	}
         if(dist >= interval && j>1) {
-                dist = 0.f;
+                dist = euclid(k.xy[i][j-1].x, k.xy[i][j-1].y,
+                                k.xy[i][j].x,k.xy[i][j].y);
+                           
 		cnt++;
 	}
         j++;
@@ -272,11 +274,11 @@ kanji extract_features(kanji k, float interval) {
         float dist = stroke_dist(k, i);
 
         float best_interv = best_interval_size(dist, interval);
-        printf("optimal interval: %f\n",best_interv);
+        printf("optimal interval: %f for stroke %i\n",best_interv, i);
         int cnt = count_extract_points(k, i, best_interv);
         e.c_points[i] = cnt;
-        printf("cnt: %i",cnt);
-        // printf("cnt: %i\n",cnt);
+        // printf("cnt: %i",cnt);
+        printf("cnt: %i\n",cnt);
         // reserve space for new kanji
         temp[i] = (point*) malloc(e.c_points[i] * sizeof(point*));
 	// add points at intervals
@@ -292,11 +294,20 @@ kanji extract_features(kanji k, float interval) {
                     float distPoints = euclid(k.xy[i][l-1].x, k.xy[i][l-1].y,
                                 k.xy[i][l].x,k.xy[i][l].y);	
                     dist += distPoints;
+                    printf("old point: (%i,%i) ",k.xy[i][l-1].x, k.xy[i][l-1].y);
+                    printf("current point: (%i,%i) ",k.xy[i][l].x, k.xy[i][l].y);
+                    printf("dist: %f \n",dist);
                 }
-                if(dist >= interval && l>1) {
+                printf("dist >= interval: %i with dist: %f, interval: %f \n", dist>=best_interv, dist, best_interv);
+                if(dist >= best_interv && l>1) {
+                    
+                   printf("added point: (%i,%i)\n ",k.xy[i][l-1].x, k.xy[i][l-1].y);
+                    
                     temp[i][idx].x = k.xy[i][l-1].x;
                     temp[i][idx].y = k.xy[i][l-1].y;
-                    dist = 0.f;
+                    dist = euclid(k.xy[i][l-1].x, k.xy[i][l-1].y,
+                                k.xy[i][l].x,k.xy[i][l].y);
+                            
                     idx++;
                 }
                 l++;
@@ -314,6 +325,7 @@ kanji extract_features(kanji k, float interval) {
             temp[i][cnt-1].x = k.xy[i][last_idx_of_i].x;
             temp[i][cnt-1].y = k.xy[i][last_idx_of_i].y;
         }
+        printf("above was: %i\n\n",i);
     }
     e.xy = temp;
     return e;

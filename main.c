@@ -11,9 +11,83 @@
 #include "distance.h"
 #include "strokemap.h"
 #include "recognizer.h"
+#include "tinydir.h"
 
-int main()
-{   
+int main() {
+    tinydir_dir dir;
+    int i;
+    tinydir_open_sorted(&dir, "./test_data");
+
+    kanji unknown;
+
+    setlocale(LC_ALL, "de_DE.UTF-8");
+    
+    kanjis data = init("data.dat");
+    for(int i=0;i<1000;i++) {
+       wprintf(L"%lc ", data.arr[i].kji);
+    }
+
+    
+    read_xml_file("./test_data/004.xml", &unknown);
+    printf("\nloaded: ");
+    wprintf(L"%lc ", unknown.kji);
+    printf("unknown:\n");
+    print_kanji(unknown);
+
+    moment(unknown);
+    printf("moment normalization applied to unknown:\n");
+    print_kanji(unknown);
+    kanji ex_unknown = extract_features(unknown, INTERVAL);
+    printf("after feature-extraction:\n");
+    print_kanji(ex_unknown);
+    printf("\nrecognized:\n ");
+    wchar_t *res = recognize(extract_features(unknown, INTERVAL), data);
+    for (int i = 0; i < 10; i++) {
+        wprintf(L"%lc ", res[i]);
+    }
+    printf("\n");
+    
+/*
+    for (i = 0; i < dir.n_files; i++) {
+        tinydir_file file;
+        tinydir_readfile_n(&dir, &file, i);
+
+        printf("%s\n", file.name);
+        if (!file.is_dir) {
+            
+            char *filename = (char*) malloc(strlen("./test_data/")+strlen(file.name)+1);//+1 for the zero-terminator
+            strcpy(filename, "./test_data/");
+            strcat(filename, file.name);
+            read_xml_file(filename, &unknown);
+            printf("loaded: ");
+            wprintf(L"%lc ", unknown.kji);
+
+            printf("recognized: ");
+            moment(unknown);
+            wchar_t *res = recognize(extract_features(unknown, INTERVAL), data);
+            for (int i = 0; i < 10; i++) {
+                wprintf(L"%lc ", res[i]);
+            }
+            printf("\n");
+
+        }
+    }
+*/
+tinydir_close(&dir);
+    
+
+    
+
+
+
+    
+        
+       // load kanji from xml
+       // load datafile
+    
+       // perform recognition and show result
+    
+        /*
     
         setlocale(LC_ALL, "de_DE.UTF-8");
         kanjis test2 = init("data.dat");
@@ -71,7 +145,7 @@ int main()
         print_smap(sm3_i);
         print_smap(sm3_c);   
         
-        */
+        
         
         // printf("read from disk:\n");
         // print_kanji(k);
@@ -123,5 +197,7 @@ int main()
         // test_add_stroke();
         testWhole();
  
+        */
+        
 	return 0;
 }

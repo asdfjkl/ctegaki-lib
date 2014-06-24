@@ -8,6 +8,23 @@ int abs(int x) {
     }
 }
 
+int max(int a, int b) {
+    if(a < b) {
+        return b;
+    } else {
+        return a;
+    }
+}
+
+int min(int a, int b) {
+    if(a < b) {
+        return a;
+    } else {
+        return b;
+    }
+}
+
+
 int manhatten(int x0, int y0, int x1, int y1) {
     int xdist = abs(x1-x0);
     int ydist = abs(y1-y0);
