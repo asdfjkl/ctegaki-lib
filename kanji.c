@@ -294,17 +294,20 @@ kanji extract_features(kanji k, float interval) {
                     float distPoints = euclid(k.xy[i][l-1].x, k.xy[i][l-1].y,
                                 k.xy[i][l].x,k.xy[i][l].y);	
                     dist += distPoints;
-                    printf("old point: (%i,%i) ",k.xy[i][l-1].x, k.xy[i][l-1].y);
-                    printf("current point: (%i,%i) ",k.xy[i][l].x, k.xy[i][l].y);
-                    printf("dist: %f \n",dist);
+                    // printf("old point: (%i,%i) ",k.xy[i][l-1].x, k.xy[i][l-1].y);
+                    // printf("current point: (%i,%i) ",k.xy[i][l].x, k.xy[i][l].y);
+                    // printf("dist: %f \n",dist);
                 }
-                printf("dist >= interval: %i with dist: %f, interval: %f \n", dist>=best_interv, dist, best_interv);
+                // printf("dist >= interval: %i with dist: %f, interval: %f \n", dist>=best_interv, dist, best_interv);
                 if(dist >= best_interv && l>1) {
                     
-                   printf("added point: (%i,%i)\n ",k.xy[i][l-1].x, k.xy[i][l-1].y);
+                   // printf("added point: (%i,%i)\n ",k.xy[i][l-1].x, k.xy[i][l-1].y);
                     
                     temp[i][idx].x = k.xy[i][l-1].x;
                     temp[i][idx].y = k.xy[i][l-1].y;
+                    // we added the previous (l-1) point, such that always
+                    // distance between two extracted points <= best_interv
+                    // holds. Thus we don't set dist to zero, but to "d(l,l-1)" 
                     dist = euclid(k.xy[i][l-1].x, k.xy[i][l-1].y,
                                 k.xy[i][l].x,k.xy[i][l].y);
                             
@@ -325,7 +328,7 @@ kanji extract_features(kanji k, float interval) {
             temp[i][cnt-1].x = k.xy[i][last_idx_of_i].x;
             temp[i][cnt-1].y = k.xy[i][last_idx_of_i].y;
         }
-        printf("above was: %i\n\n",i);
+        // printf("above was: %i\n\n",i);
     }
     e.xy = temp;
     return e;
