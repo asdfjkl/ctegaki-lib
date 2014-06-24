@@ -242,9 +242,9 @@ int count_extract_points(kanji k, int i, float interval) {
                 dist += distPoints;
 	}
         if(dist >= interval && j>1) {
-                dist = euclid(k.xy[i][j-1].x, k.xy[i][j-1].y,
-                                k.xy[i][j].x,k.xy[i][j].y);
-                           
+                // dist = euclid(k.xy[i][j-1].x, k.xy[i][j-1].y,
+                //                k.xy[i][j].x,k.xy[i][j].y);
+                dist = dist - interval;           
 		cnt++;
 	}
         j++;
@@ -308,8 +308,10 @@ kanji extract_features(kanji k, float interval) {
                     // we added the previous (l-1) point, such that always
                     // distance between two extracted points <= best_interv
                     // holds. Thus we don't set dist to zero, but to "d(l,l-1)" 
-                    dist = euclid(k.xy[i][l-1].x, k.xy[i][l-1].y,
-                                k.xy[i][l].x,k.xy[i][l].y);
+                    
+                    // dist = euclid(k.xy[i][l-1].x, k.xy[i][l-1].y,
+                    //            k.xy[i][l].x,k.xy[i][l].y);
+                    dist = dist - best_interv;
                             
                     idx++;
                 }
