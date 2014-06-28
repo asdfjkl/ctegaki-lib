@@ -28,6 +28,45 @@ void insert_into(result rs[], int len, int weight, kanji k) {
     rs[i].weight = weight;
 }   
 
+int compute_coarse_weight(smap sm, kanji larger, kanji smaller) {
+    
+    int weight = 0;
+    for(int i=0;i<sm.length;i++) {
+        if(sm.m[i] != -1) {
+            // coarse weight: Endpoint Distance divided by length 
+            // of smaller stroke
+            int wi = (10 * endpoint(smaller, sm.m[i], larger, i))/
+                      smaller.c_strokes;
+            printf("(%i,%i): %i, smaller len: %i\n",i,sm.m[i],wi, smaller.c_strokes);
+            weight += wi;
+        }
+    }
+    return weight;
+}
+
+int compute_fine_weight(smap sm, kanji larger, kanji smaller) {
+    
+    int weight = 0;
+    int i=0;
+    while(i<larger.c_strokes) {
+        int larger_idx_start = i;
+        int smaller_idx = sm.m[i];
+        while(sm.m[i] == smaller_idx && i < larger.c_strokes) {
+            i++;
+        }
+        i--;
+        int larger_idx_stop = i;
+        int wi = whole(smaller, smaller_idx, 
+                larger, larger_idx_start, larger_idx_stop);
+        weight += wi;
+        printf("(%i-%i,%i): %i\n",larger_idx_start,larger_idx_stop,smaller_idx,wi);
+        i++;
+    }
+    return weight;
+}
+
+
+
 wchar_t* recognize(kanji unknown, kanjis data) {
     
     kanji dummy_k;
@@ -70,8 +109,10 @@ wchar_t* recognize(kanji unknown, kanjis data) {
         smap sm_comp_ep = complete_map(sm_init_ep, larger, smaller, p_endpoint_conc);
                     print_smap(sm_comp_ep);
 
-        int weight_i = compute_weight(sm_comp_ep, larger, smaller, p_endpoint_conc);
-        weight_i = (10 * larger.c_strokes * weight_i)/(smaller.c_strokes);
+        int weight_i = compute_coarse_weight(sm_comp_ep, larger, smaller);
+                wprintf(L"\n coarse weight: %i for %lc ", weight_i, data.arr[i].kji);
+
+       // weight_i = (10 * larger.c_strokes * weight_i)/(smaller.c_strokes);
         		// return ((largeX.length*10)/(smallX.length))*weight;
 
         
@@ -115,11 +156,11 @@ wchar_t* recognize(kanji unknown, kanjis data) {
                 smaller = unknown;
             }
             smap sm_init_wh = get_initial_map(larger, smaller, p_initial);
-               //                 print_smap(sm_init_wh);
+            print_smap(sm_init_wh);
 
             smap sm_comp_wh = complete_map(sm_init_wh, larger, smaller, p_whole);
-            // print_smap(sm_comp_wh);
-            int weight_i = compute_weight1(sm_comp_wh, larger, smaller, p_whole);
+            print_smap(sm_comp_wh);
+            int weight_i = compute_fine_weight(sm_comp_wh, larger, smaller);
  
             wprintf(L"\n fine weight: %i for %lc ", weight_i, best_100[i].k.kji);
             if(weight_i < 1000) {

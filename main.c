@@ -23,8 +23,9 @@ int main() {
     setlocale(LC_ALL, "de_DE.UTF-8");
     
     kanjis data = init("data.dat");
-    for(int i=0;i<1000;i++) {
+    for(int i=0;i<1;i++) {
        wprintf(L"%lc ", data.arr[i].kji);
+       print_kanji(data.arr[i]);
     }
 
     
