@@ -11,6 +11,8 @@
 #ifndef DISTANCE_H
 #define	DISTANCE_H
 
+int direction(point a, point b);
+
 int endpoint(kanji a, int idx_a, kanji b, int idx_b);
 
 int endpoint_conc(kanji a, int idx_a, kanji b, int begin, int end);

@@ -4,6 +4,48 @@
 #include <stdio.h>
 #include "math_ext.h"
 #include "kanji.h"
+#include "globals.h"
+
+// returns the direction between two points
+// direction is coded by an int (see globals.h)
+int direction(point a, point b) {
+
+    if (b.x > a.x) { // b is right of a 
+        if (b.y > a.y) { // b is below of a
+            return RDWN;
+        }
+        if (b.y < a.y) { // b is above of a
+            return RUP;
+        }
+        if (b.y == a.y) {
+            return R;
+        }
+    }
+    if (b.x < a.x) { // b is left of a
+        if (b.y > a.y) { // b is below of a
+            return LDWN;
+        }
+        if (b.y < a.y) { // b is above of a
+            return LUP;
+        }
+        if (b.y == a.y) {
+            return L;
+        }
+    }
+    if (b.x == a.x) { // same on x
+        if (b.y > a.y) { // b is below of a
+            return DWN;
+        }
+        if (b.y < a.y) { // b is above of a
+            return UP;
+        }
+        if (b.y == a.y) {
+            return ID;
+        }
+    }
+    return ID;
+}
+
 
 // int min(int a, int b) { return (a < b) ? a : b; }
 
@@ -287,3 +329,4 @@ void testWhole() {
     printf("res: %i\n",res);
  
 }
+

@@ -10,6 +10,7 @@
 #include <locale.h>
 #include "distance.h"
 #include "strokemap.h"
+#include "rasterize.h"
 #include "recognizer.h"
 #include "tinydir.h"
 
@@ -47,6 +48,9 @@ int main() {
         wprintf(L"%lc ", res[i]);
     }
     printf("\n");
+    
+    test_rev_stroke();
+    test_plot2d();
     
 /*
     for (i = 0; i < dir.n_files; i++) {
