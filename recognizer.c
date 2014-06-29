@@ -104,10 +104,10 @@ wchar_t* recognize(kanji unknown, kanjis data) {
             smaller = unknown;
         }
         smap sm_init_ep = get_initial_map(larger, smaller, p_endpoint);
-                            print_smap(sm_init_ep);
+                           // print_smap(sm_init_ep);
 
         smap sm_comp_ep = complete_map(sm_init_ep, larger, smaller, p_endpoint_conc);
-                    print_smap(sm_comp_ep);
+                    // print_smap(sm_comp_ep);
 
         int weight_i = compute_coarse_weight(sm_comp_ep, larger, smaller);
                 wprintf(L"\n coarse weight: %i for %lc ", weight_i, data.arr[i].kji);
