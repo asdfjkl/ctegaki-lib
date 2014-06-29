@@ -117,7 +117,9 @@ int plot2d(point src, point dest, bool simulate, int offset, point *stroke) {
                 point p;
                 p.x = y;
                 p.y = x;
+                // printf("stroke_idx, steep:%i\n",stroke_idx);
                 stroke[stroke_idx] = p;
+                stroke_idx++;
             }
         } else {
             cnt++;
@@ -125,7 +127,9 @@ int plot2d(point src, point dest, bool simulate, int offset, point *stroke) {
                 point p;
                 p.x = x;
                 p.y = y;
+                // printf("stroke_idx, else:%i\n",stroke_idx);
                 stroke[stroke_idx] = p;
+                stroke_idx++;
             }
         }
         error = error - deltay;
@@ -134,10 +138,64 @@ int plot2d(point src, point dest, bool simulate, int offset, point *stroke) {
             error = error + deltax;
         }
     }
-    if (reverse) {
-      reverse_stroke(stroke,offset,offset+cnt);
+    if(!simulate && reverse) {
+      // reverse_stroke expects: stroke, from(incl), to(incl).
+      // cnt was increased after adding the point, so it's one ahead
+      //  printf("reversee\n");
+      reverse_stroke(stroke,offset,offset+cnt-1);
     }
     return cnt;
+}
+
+// expects a kanji with some strokes
+// fills between each two points of a stroke
+// intermediate "filler" points using
+// bresenhams line algo to increase the
+// resolution
+kanji raster(kanji k) {
+    // print_kanji(k);
+    kanji k_raster;
+    k_raster.kji = k.kji;
+    k_raster.c_strokes = 0;
+    k_raster.c_points = 0;
+    k_raster.xy = 0;
+    for(int i=0;i<k.c_strokes;i++) {
+        // plot_dists_i stores in i how many points will exist 
+        // between stroke_i[j], stroke_i[j-1]
+        int *plot_dists_i = (int*) malloc(sizeof(int)*k.c_points[i]);
+        int new_size_of_i = 0;
+        point *stroke_i = k.xy[i];
+        // for each two consecutive points, count how many points
+        // will be needed, store that into plot_dists_i
+        // count overall points, and store them in new_size_of_i
+        for(int j=0;j<k.c_points[i]-1;j++) {
+            point *dummy;            
+            int cnt_j_jplus1 = plot2d(stroke_i[j],stroke_i[j+1],true,0,dummy);
+            if(j==0) {              
+                plot_dists_i[j] = cnt_j_jplus1;    
+            } else {
+                plot_dists_i[j] = plot_dists_i[j-1] + cnt_j_jplus1;
+            }
+            new_size_of_i += cnt_j_jplus1;
+        }
+        // 
+        // printf("looped, new_size: %i\n",new_size_of_i);
+        point *new_stroke = (point*) malloc(sizeof(point) * new_size_of_i);
+        // printf("ok\n");
+        for(int j=0;j<k.c_points[i]-1;j++) {
+            if(j==0) {
+               // printf("calling plot2d: plot_dists_i[j]=%i\n",0);
+               plot2d(stroke_i[j],stroke_i[j+1],false,0,new_stroke);
+            } else {
+               // printf("calling plot2d: plot_dists_i[j]=%i\n",plot_dists_i[j-1]);
+               plot2d(stroke_i[j],stroke_i[j+1],false,plot_dists_i[j-1],new_stroke);
+            }
+        }
+        // printf("add stroke\n");
+        add_stroke(&k_raster,new_stroke,new_size_of_i);
+    }
+    // print_kanji(k_raster);
+    return k_raster;
 }
 
 void test_plot2d() {
@@ -152,10 +210,10 @@ void test_plot2d() {
     p3.x = 20; p3.y = 20;
     int numbers = -1;
     point *strokes;
-    numbers = plot2d(p0, p1, true, 0, strokes);
+    numbers = plot2d(p3, p2, true, 0, strokes);
     printf("numbers needed:%i\n",numbers);
     strokes = (point*) malloc(sizeof(point) *numbers);
-    numbers = plot2d(p0,p1,false,0,strokes);
+    numbers = plot2d(p2,p3,false,0,strokes);
     for(int i=0;i<numbers;i++) {
         printf("(%i,%i) ",strokes[i].x,strokes[i].y);
     }

@@ -10,6 +10,7 @@
 
 void test_rev_stroke();
 void test_plot2d();
+kanji raster(kanji k);
 
 
 #ifdef	__cplusplus

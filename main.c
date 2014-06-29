@@ -24,6 +24,7 @@ int main() {
     setlocale(LC_ALL, "de_DE.UTF-8");
     
     kanjis data = init("data.dat");
+    printf("LOADED FROM DATA.DAT\n");
     for(int i=0;i<1;i++) {
        wprintf(L"%lc ", data.arr[i].kji);
        print_kanji(data.arr[i]);
@@ -34,24 +35,31 @@ int main() {
     printf("\nloaded: ");
     wprintf(L"%lc ", unknown.kji);
     printf("unknown:\n");
-    print_kanji(unknown);
+    // print_kanji(unknown);
 
-    moment(unknown);
-    printf("moment normalization applied to unknown:\n");
-    print_kanji(unknown);
-    kanji ex_unknown = extract_features(unknown, INTERVAL);
-    printf("after feature-extraction:\n");
+    printf("rasterize\n");
+    kanji ras_unknown = raster(unknown);
+    // print_kanji(ras_unknown);
+    moment(ras_unknown);
+    printf("moment normalization applied to rasterized unknown:\n");
+    // print_kanji(ras_unknown);
+    printf("raster again:\n");
+    kanji ras_ras_unknown = raster(ras_unknown);
+    // print_kanji(ras_ras_unknown);
+    kanji ex_unknown = extract_features(ras_ras_unknown, INTERVAL);
+    printf("FINAL RESULT after feature-extraction:\n");
     print_kanji(ex_unknown);
     printf("\nrecognized:\n ");
-    wchar_t *res = recognize(extract_features(unknown, INTERVAL), data);
+    wchar_t *res = recognize(ex_unknown, data);
     for (int i = 0; i < 10; i++) {
         wprintf(L"%lc ", res[i]);
     }
     printf("\n");
     
-    test_rev_stroke();
-    test_plot2d();
-    
+//    test_rev_stroke();
+//    test_plot2d();
+ 
+     
 /*
     for (i = 0; i < dir.n_files; i++) {
         tinydir_file file;

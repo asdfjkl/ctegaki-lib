@@ -90,9 +90,9 @@ wchar_t* recognize(kanji unknown, kanjis data) {
        //if(data.arr[i].kji == unknown.kji || data.arr[i].kji == hirag_ri) {
         {
         printf("unknown:\n");
-            print_kanji(unknown);
+            // print_kanji(unknown);
             printf("from data-set:\n");
-            print_kanji(data.arr[i]);
+            // print_kanji(data.arr[i]);
             
         kanji larger;
         kanji smaller;
