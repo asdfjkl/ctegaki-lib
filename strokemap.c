@@ -72,9 +72,9 @@ smap make_by_dist(kanji larger, kanji smaller,
                                          // been assigned yet, check, otherwise
                                          // skip
                 int dist_ij = dist(larger,j,smaller,i);
-                printf("distij: %i %i %i\n",i,j,dist_ij);
+                // printf("distij: %i %i %i\n",i,j,dist_ij);
                 if(dist_ij < min_dist) {
-                    printf("in loop, mindist: %i \n", min_dist);
+                   // printf("in loop, mindist: %i \n", min_dist);
                     min_dist = dist_ij;
                     min_j = j;
                 }
@@ -95,8 +95,8 @@ smap get_initial_map(kanji larger, kanji smaller,
     // first initalize, then optimize the
     // initial assignment
     smap sm = make_by_dist(larger, smaller, dist);
-    printf("initial stroke map\n");
-    print_smap(sm);
+   // printf("initial stroke map\n");
+   // print_smap(sm);
 
     // optimize the assignment by iterating
     // several times. Here set to 3

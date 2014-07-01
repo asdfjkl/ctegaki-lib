@@ -173,6 +173,98 @@ int whole(kanji a, int idx_a, kanji b, int begin, int end) {
     return (dist * 10) / (min(len_b, len_a));
 }
 
+
+int whole_delta(kanji a, int idx_a, kanji b, int begin, int end) {
+
+    int dist = 0;
+    
+    // total length (number of points) of the combined stroke of b
+    int len_b = 0;
+    for (int i = begin; i <= end; i++) {
+        len_b += b.c_points[i];
+    }
+    
+    // length of the single stroke of a
+    int len_a = a.c_points[idx_a];
+    point last_of_a;
+    point last_of_b;
+    last_of_a.x = last_of_a.y = 0;
+    last_of_b.x = last_of_b.y = 0;
+    
+    if (len_b <= len_a) {
+        // The combined stroke of b has less points than the single stroke of a
+        // printf("combined smaller than single\n");
+        int i = begin;
+        int j = 0;
+        int combined_index = 0; // virtual index of the combined stroke
+        // b.xy[i][j] corresponds to the combined_index' position of the combined stroke
+        while (i <= end) {
+            // tau calculates the index of b, to which the current
+            // virtual index of the combined stroke is mapped to
+            int tau = tau_of_i(combined_index, len_a, len_b);
+            
+            int delta_x_a = a.xy[idx_a][tau].x - last_of_a.x;
+            int delta_y_a = a.xy[idx_a][tau].y - last_of_a.y;
+            
+            int delta_x_b = b.xy[i][j].x - last_of_b.x;
+            int delta_y_b = b.xy[i][j].y - last_of_b.y;
+            
+            dist += (abs(delta_x_a - delta_x_b) + abs(delta_y_a - delta_y_b));
+            
+            last_of_a.x = a.xy[idx_a][tau].x;
+            last_of_a.y = a.xy[idx_a][tau].y;
+            last_of_b.x = b.xy[i][j].x;
+            last_of_b.y = b.xy[i][j].y;
+            
+            combined_index++;
+            // if we haven't reached the end of the i's stroke, go to the next point
+            // otherwise jump to the next stroke, and choose the zero's point
+            if (j < b.c_points[i] - 1) {
+                j++;
+            } else {
+                i++;
+                j = 0;
+            }
+        }
+    } else {
+        // The single stroke of a has less points than the combined stroke of b
+        // printf("combined larger than single\n");
+        
+        // k holds the index of the smaller stroke
+        for (int k = 0; k < len_a; k++) {
+            // k is mapped to the tau's index of the combined stroke of b
+            int tau = tau_of_i(k, len_b, len_a);
+            // convert the combined index tau to array position of b
+            // by decreasing tau. At the end [j][tau] corresponds to
+            // the tau's position (current value of tau) of the combined index
+            int j = 0;
+            // as long as tau is not a valid point
+            while(tau > b.c_points[begin+j] -1 ) {
+                // decrease tau by the number of points on the begin+j's stroke
+                tau -= b.c_points[begin+j];
+                // go to the next stroke
+                j++;
+            }
+            int delta_x_a = a.xy[idx_a][k].x - last_of_a.x;
+            int delta_y_a = a.xy[idx_a][k].y - last_of_a.y;
+            
+            int delta_x_b = b.xy[begin+j][tau].x - last_of_b.x;
+            int delta_y_b = b.xy[begin+j][tau].y - last_of_b.y;
+            
+            dist += (abs(delta_x_a - delta_x_b) + abs(delta_y_a - delta_y_b));
+            
+            last_of_a.x = a.xy[idx_a][k].x;
+            last_of_a.y = a.xy[idx_a][k].y;
+            last_of_b.x = b.xy[begin+j][tau].x;
+            last_of_b.y = b.xy[begin+j][tau].y;
+            
+        }
+    }
+    return (dist * 10) / (min(len_b, len_a));
+}
+
+
+
 /*
  * todo: implement whole_whole mit direction
  */

@@ -60,7 +60,9 @@ int main() {
 //    test_plot2d();
  
      
-/*
+    int in_zero = 0;
+    int in_five = 0;
+    int in_ten = 0;
     for (i = 0; i < dir.n_files; i++) {
         tinydir_file file;
         tinydir_readfile_n(&dir, &file, i);
@@ -74,18 +76,33 @@ int main() {
             read_xml_file(filename, &unknown);
             printf("loaded: ");
             wprintf(L"%lc ", unknown.kji);
-
+            kanji un_r = raster(unknown);
             printf("recognized: ");
-            moment(unknown);
-            wchar_t *res = recognize(extract_features(unknown, INTERVAL), data);
+            moment(un_r);
+            kanji un_rnr = raster(un_r);
+            kanji ex = extract_features(un_rnr, INTERVAL);
+            wchar_t *res = recognize(ex, data);
             for (int i = 0; i < 10; i++) {
                 wprintf(L"%lc ", res[i]);
+                if(res[i] == un_rnr.kji) {
+                    if(i==0) {
+                        in_zero++;
+                    }
+                    if(i>0 && i<= 5) {
+                        in_five++;
+                    }
+                    if(i>5) {
+                        in_ten++;
+                    }
+                }
+                }
             }
-            printf("\n");
-
-        }
+            
     }
-*/
+
+        printf("\nrecognized: top 1: %i\n",in_zero);            
+        printf("recognized: top 5: %i\n",in_zero+in_five);
+        printf("recognized: top10: %i\n",in_zero+in_five+in_ten);    
 tinydir_close(&dir);
     
 

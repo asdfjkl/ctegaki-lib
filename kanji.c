@@ -274,11 +274,11 @@ kanji extract_features(kanji k, float interval) {
         float dist = stroke_dist(k, i);
 
         float best_interv = best_interval_size(dist, interval);
-        printf("optimal interval: %f for stroke %i\n",best_interv, i);
+        // printf("optimal interval: %f for stroke %i\n",best_interv, i);
         int cnt = count_extract_points(k, i, best_interv);
         e.c_points[i] = cnt;
         // printf("cnt: %i",cnt);
-        printf("cnt: %i\n",cnt);
+        // printf("cnt: %i\n",cnt);
         // reserve space for new kanji
         temp[i] = (point*) malloc(e.c_points[i] * sizeof(point*));
 	// add points at intervals

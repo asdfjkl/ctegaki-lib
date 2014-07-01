@@ -21,6 +21,8 @@ int initial(kanji a, int idx_a, kanji b, int idx_b);
 
 int whole(kanji a, int idx_a, kanji b, int begin, int end);
 
+int whole_delta(kanji a, int idx_a, kanji b, int begin, int end);
+
 void testWhole();
 
 #ifdef	__cplusplus
