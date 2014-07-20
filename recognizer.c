@@ -178,14 +178,14 @@ wchar_t* recognize(kanji unknown, kanjis data) {
             // print_smap(sm_init_wh);
 
             smap sm_comp_wh;
-            if(unknown.c_strokes < 2) {
+            if(unknown.c_strokes < 29) {
                 sm_comp_wh = complete_map(sm_init_wh, larger, smaller, p_whole_delta);
             } else {
                 sm_comp_wh = complete_map(sm_init_wh, larger, smaller, p_whole);
             }
             // print_smap(sm_comp_wh);
             int weight_i = 0;
-            if(unknown.c_strokes < 2) {
+            if(unknown.c_strokes < 29) {
                 weight_i = compute_fine_weight(sm_comp_wh, larger, smaller, true);
             } else {
                 weight_i = compute_fine_weight(sm_comp_wh, larger, smaller, false);

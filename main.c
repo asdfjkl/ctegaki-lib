@@ -15,6 +15,9 @@
 #include "tinydir.h"
 
 int main() {
+     test_rev_stroke();
+    
+/*    
     tinydir_dir dir;
     int i;
     tinydir_open_sorted(&dir, "./test_data");
@@ -58,12 +61,12 @@ int main() {
     
 //    test_rev_stroke();
 //    test_plot2d();
- 
-     
+ */
+/*     
     int in_zero = 0;
     int in_five = 0;
-    int in_ten = 0;
-    for (i = 0; i < dir.n_files; i++) {
+    int in_ten = 0;  // dir.n_files
+    for (i = 0; i < 1; i++) {
         tinydir_file file;
         tinydir_readfile_n(&dir, &file, i);
 
@@ -104,9 +107,9 @@ int main() {
         printf("recognized: top 5: %i\n",in_zero+in_five);
         printf("recognized: top10: %i\n",in_zero+in_five+in_ten);    
 tinydir_close(&dir);
-    
+    */
 
-    
+// until here: was valgrind    
 
 
 
