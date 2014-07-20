@@ -29,6 +29,14 @@ void print_kanji(kanji k) {
     printf("\n");
 }
 
+void free_kanji(kanji k) {
+    for(int i=0;i<k.c_strokes;i++) {
+        free(k.xy[i]);
+    }
+    free(k.xy);
+    free(k.c_points);
+}
+
 void add_stroke(kanji* k, point* ps, int len) {
     
     

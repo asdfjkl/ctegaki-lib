@@ -32,7 +32,7 @@ kanjis read_bin_file(char filename[]) {
 	int all = 0;
 	fread(&all,sizeof(int),1,data);
 	kjs.count = all;
-	kjs.arr = (kanji*) malloc(kjs.count * sizeof(kanji));
+	kjs.arr = (kanji*) malloc(kjs.count * sizeof(kanji));  //L
 	for(int l=0;l<kjs.count;l++) {
 		int m = 0;
 		kanji k;
@@ -43,10 +43,10 @@ kanjis read_bin_file(char filename[]) {
                 k.kji = c;
 		k.c_strokes = m;
 		k.c_points = (int*) malloc(k.c_strokes*sizeof(int));
-		point** temp = (point**) malloc(k.c_strokes * sizeof(point*));
+		point** temp = (point**) malloc(k.c_strokes * sizeof(point*)); //L
         	for(int i=0;i<k.c_strokes;i++) {
 			fread(&(k.c_points[i]),sizeof(int),1,data);
-			temp[i] = (point*) malloc(k.c_points[i] * sizeof(point*));
+			temp[i] = (point*) malloc(k.c_points[i] * sizeof(point*)); //L
 			for(int j=0;j<k.c_points[i];j++) {
 				point p;
 				fread(&p,sizeof(point),1,data);

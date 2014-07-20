@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE kanji SYSTEM "kanji.dtd">
+<kanji>
+    <unicode>3078</unicode>
+    <stroke>
+        <point x="66" y="140"/>
+        <point x="66" y="139"/>
+        <point x="66" y="138"/>
+        <point x="67" y="137"/>
+        <point x="68" y="133"/>
+        <point x="72" y="130"/>
+        <point x="75" y="125"/>
+        <point x="78" y="120"/>
+        <point x="81" y="116"/>
+        <point x="83" y="111"/>
+        <point x="86" y="107"/>
+        <point x="87" y="103"/>
+        <point x="89" y="101"/>
+        <point x="92" y="100"/>
+        <point x="94" y="99"/>
+        <point x="98" y="98"/>
+        <point x="100" y="97"/>
+        <point x="102" y="97"/>
+        <point x="103" y="97"/>
+        <point x="105" y="97"/>
+        <point x="109" y="97"/>
+        <point x="114" y="100"/>
+        <point x="119" y="103"/>
+        <point x="126" y="107"/>
+        <point x="131" y="112"/>
+        <point x="138" y="117"/>
+        <point x="144" y="121"/>
+        <point x="151" y="126"/>
+        <point x="156" y="130"/>
+        <point x="162" y="134"/>
+        <point x="166" y="137"/>
+        <point x="172" y="142"/>
+        <point x="177" y="145"/>
+        <point x="182" y="148"/>
+        <point x="186" y="151"/>
+        <point x="190" y="153"/>
+        <point x="192" y="155"/>
+        <point x="193" y="156"/>
+    </stroke>
+</kanji>

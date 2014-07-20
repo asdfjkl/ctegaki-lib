@@ -52,7 +52,7 @@ int compute_fine_weight(smap sm, kanji larger, kanji smaller, bool is_small) {
     while(i<larger.c_strokes) {
         int larger_idx_start = i;
         int smaller_idx = sm.m[i];
-        while(sm.m[i] == smaller_idx && i < larger.c_strokes) {
+        while(i < larger.c_strokes && sm.m[i] == smaller_idx   ) {
             i++;
         }
         i--;
@@ -88,6 +88,9 @@ wchar_t* recognize(kanji unknown, kanjis data) {
     
     kanji dummy_k;
     dummy_k.c_strokes = 0;
+    dummy_k.c_points = 0;
+    dummy_k.xy = 0;
+    dummy_k.kji = 'c';
     result best_100[100];
     result dummy;
     dummy.weight = 100000;
@@ -134,12 +137,14 @@ wchar_t* recognize(kanji unknown, kanjis data) {
 
         
         // wprintf(L"\n coarse weight: %i for %lc ", weight_i, data.arr[i].kji);
-        if(true) {
+        if(1) {
                     insert_into(best_100, 100, weight_i, data.arr[i]);
          // wprintf(L"\n %lc ", data.arr[i].kji);
         // print_smap(sm_comp_ep);
         // printf("weight: %i\n",weight_i);
         }
+        free(sm_init_ep.m);
+       // free(sm_comp_ep.m);
     }
     }
     // fine recognition with initialization by 
@@ -175,17 +180,16 @@ wchar_t* recognize(kanji unknown, kanjis data) {
                 smaller = unknown;
             }
             smap sm_init_wh = get_initial_map(larger, smaller, p_initial);
-            // print_smap(sm_init_wh);
 
             smap sm_comp_wh;
-            if(unknown.c_strokes < 29) {
+            if(unknown.c_strokes < 0) {
                 sm_comp_wh = complete_map(sm_init_wh, larger, smaller, p_whole_delta);
             } else {
                 sm_comp_wh = complete_map(sm_init_wh, larger, smaller, p_whole);
             }
             // print_smap(sm_comp_wh);
             int weight_i = 0;
-            if(unknown.c_strokes < 29) {
+            if(unknown.c_strokes < 2) {
                 weight_i = compute_fine_weight(sm_comp_wh, larger, smaller, true);
             } else {
                 weight_i = compute_fine_weight(sm_comp_wh, larger, smaller, false);
@@ -197,6 +201,8 @@ wchar_t* recognize(kanji unknown, kanjis data) {
 
             }
             insert_into(best_10, 10, weight_i, best_100[i].k);
+            free(sm_init_wh.m);
+            //free(sm_comp_wh.m);
         }
     }
     

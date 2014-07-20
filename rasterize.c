@@ -7,7 +7,7 @@
 #include "distance.h"
 
 void reverse_stroke(point *stroke,int offset,int upto) {
-    point *temp = (point*) malloc((upto-offset)*sizeof(point));
+    point *temp = (point*) malloc((upto+1-offset)*sizeof(point));
     for(int i=offset;i<=upto;i++) {
         point ti;
         ti.x = stroke[i].x;
@@ -54,6 +54,7 @@ void test_rev_stroke() {
         printf("(%i,%i) ",arr[i].x,arr[i].y);
     }
     printf("\n");
+    free(arr);
 }
 
 
@@ -193,6 +194,7 @@ kanji raster(kanji k) {
         }
         // printf("add stroke\n");
         add_stroke(&k_raster,new_stroke,new_size_of_i);
+        free(plot_dists_i);
     }
     // print_kanji(k_raster);
     return k_raster;

@@ -49,9 +49,7 @@ smap make_by_dist(kanji larger, kanji smaller,
     // create map of size larger and
     // set each image as unassigned (-1)
     smap sm = make_smap(len_large);
-    for(int i=0;i<sm.length;i++) {
-        sm.m[i] = -1;
-    }
+    
     // to track those strokes of larger kanji
     // which haven't been fixed yet - initially all
     bool* rem_large = (bool*) malloc(sizeof(bool) * len_large);

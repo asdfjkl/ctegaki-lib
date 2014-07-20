@@ -15,66 +15,26 @@
 #include "tinydir.h"
 
 int main() {
-     test_rev_stroke();
-    
-/*    
-    tinydir_dir dir;
-    int i;
-    tinydir_open_sorted(&dir, "./test_data");
-
-    kanji unknown;
 
     setlocale(LC_ALL, "de_DE.UTF-8");
-    
+
+    tinydir_dir dir;
+    int i;
+    tinydir_open_sorted(&dir, "./hiragana");
     kanjis data = init("data.dat");
-    printf("LOADED FROM DATA.DAT\n");
-    for(int i=0;i<1;i++) {
-       wprintf(L"%lc ", data.arr[i].kji);
-       print_kanji(data.arr[i]);
-    }
 
-    
-    read_xml_file("./test_data/004.xml", &unknown);
-    printf("\nloaded: ");
-    wprintf(L"%lc ", unknown.kji);
-    printf("unknown:\n");
-    // print_kanji(unknown);
-
-    printf("rasterize\n");
-    kanji ras_unknown = raster(unknown);
-    // print_kanji(ras_unknown);
-    moment(ras_unknown);
-    printf("moment normalization applied to rasterized unknown:\n");
-    // print_kanji(ras_unknown);
-    printf("raster again:\n");
-    kanji ras_ras_unknown = raster(ras_unknown);
-    // print_kanji(ras_ras_unknown);
-    kanji ex_unknown = extract_features(ras_ras_unknown, INTERVAL);
-    printf("FINAL RESULT after feature-extraction:\n");
-    print_kanji(ex_unknown);
-    printf("\nrecognized:\n ");
-    wchar_t *res = recognize(ex_unknown, data);
-    for (int i = 0; i < 10; i++) {
-        wprintf(L"%lc ", res[i]);
-    }
-    printf("\n");
-    
-//    test_rev_stroke();
-//    test_plot2d();
- */
-/*     
     int in_zero = 0;
     int in_five = 0;
-    int in_ten = 0;  // dir.n_files
-    for (i = 0; i < 1; i++) {
+    int in_ten = 0; // dir.n_files
+    for (i = 0; i < dir.n_files; i++) {
         tinydir_file file;
         tinydir_readfile_n(&dir, &file, i);
 
-        printf("%s\n", file.name);
+        printf("%s ", file.name);
         if (!file.is_dir) {
-            
-            char *filename = (char*) malloc(strlen("./test_data/")+strlen(file.name)+1);//+1 for the zero-terminator
-            strcpy(filename, "./test_data/");
+            kanji unknown;
+            char *filename = (char*) malloc(strlen("./hiragana/") + strlen(file.name) + 1); //+1 for the zero-terminator
+            strcpy(filename, "./hiragana/");
             strcat(filename, file.name);
             read_xml_file(filename, &unknown);
             printf("loaded: ");
@@ -87,28 +47,40 @@ int main() {
             wchar_t *res = recognize(ex, data);
             for (int i = 0; i < 10; i++) {
                 wprintf(L"%lc ", res[i]);
-                if(res[i] == un_rnr.kji) {
-                    if(i==0) {
+                if (res[i] == un_rnr.kji) {
+                    if (i == 0) {
                         in_zero++;
                     }
-                    if(i>0 && i<= 5) {
+                    if (i > 0 && i <= 5) {
                         in_five++;
                     }
-                    if(i>5) {
+                    if (i > 5) {
                         in_ten++;
                     }
                 }
-                }
             }
-            
+            free_kanji(unknown);
+            free_kanji(un_r);
+            free_kanji(un_rnr);
+            free_kanji(ex);
+            free(filename);
+        }
+        printf("\n");
     }
 
-        printf("\nrecognized: top 1: %i\n",in_zero);            
-        printf("recognized: top 5: %i\n",in_zero+in_five);
-        printf("recognized: top10: %i\n",in_zero+in_five+in_ten);    
-tinydir_close(&dir);
-    */
+    printf("\nrecognized: top 1: %i\n", in_zero);
+    printf("recognized: top 5: %i\n", in_zero + in_five);
+    printf("recognized: top10: %i\n", in_zero + in_five + in_ten);
 
+    for (int i = 0; i < data.count; i++) {
+        //wprintf(L"%lc ", data.arr[i].kji);
+        //print_kanji(data.arr[i]);       
+        free_kanji(data.arr[i]);
+    }
+    free(data.arr);
+    tinydir_close(&dir);
+    
+        
 // until here: was valgrind    
 
 
@@ -146,7 +118,7 @@ tinydir_close(&dir);
         // printf("dist00 %i 01 %i 10 %i\n",endpoint(k,0,k,0),endpoint(k,0,k,1),endpoint(k,1,k,0));
         
         test_cases();
-        /*
+
         kanji k1;
         kanji k2;
         read_xml_file("7272.xml",&k1);

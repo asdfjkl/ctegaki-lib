@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE kanji SYSTEM "kanji.dtd">
+<kanji>
+    <unicode>3053</unicode>
+    <stroke>
+        <point x="69" y="73"/>
+        <point x="69" y="72"/>
+        <point x="70" y="72"/>
+        <point x="73" y="72"/>
+        <point x="76" y="72"/>
+        <point x="80" y="73"/>
+        <point x="86" y="73"/>
+        <point x="92" y="73"/>
+        <point x="99" y="73"/>
+        <point x="104" y="73"/>
+        <point x="109" y="73"/>
+        <point x="113" y="73"/>
+        <point x="117" y="73"/>
+        <point x="121" y="74"/>
+        <point x="126" y="74"/>
+        <point x="130" y="74"/>
+        <point x="133" y="75"/>
+        <point x="136" y="75"/>
+        <point x="139" y="75"/>
+        <point x="142" y="75"/>
+        <point x="145" y="75"/>
+        <point x="149" y="75"/>
+        <point x="152" y="75"/>
+        <point x="155" y="75"/>
+        <point x="158" y="75"/>
+        <point x="159" y="75"/>
+    </stroke>
+    <stroke>
+        <point x="76" y="140"/>
+        <point x="75" y="140"/>
+        <point x="75" y="142"/>
+        <point x="74" y="144"/>
+        <point x="74" y="147"/>
+        <point x="74" y="150"/>
+        <point x="74" y="152"/>
+        <point x="74" y="153"/>
+        <point x="74" y="155"/>
+        <point x="74" y="156"/>
+        <point x="75" y="157"/>
+        <point x="76" y="158"/>
+        <point x="77" y="160"/>
+        <point x="78" y="161"/>
+        <point x="81" y="162"/>
+        <point x="85" y="164"/>
+        <point x="89" y="165"/>
+        <point x="94" y="167"/>
+        <point x="99" y="168"/>
+        <point x="105" y="168"/>
+        <point x="113" y="169"/>
+        <point x="121" y="169"/>
+        <point x="128" y="169"/>
+        <point x="136" y="169"/>
+        <point x="140" y="169"/>
+        <point x="145" y="169"/>
+        <point x="147" y="169"/>
+        <point x="148" y="169"/>
+        <point x="150" y="168"/>
+        <point x="152" y="168"/>
+        <point x="154" y="167"/>
+        <point x="157" y="167"/>
+        <point x="161" y="167"/>
+        <point x="164" y="167"/>
+        <point x="167" y="167"/>
+        <point x="168" y="167"/>
+        <point x="169" y="167"/>
+        <point x="170" y="167"/>
+    </stroke>
+</kanji>

@@ -18,6 +18,8 @@ struct kanji {
 
 void add_stroke(kanji* k, point* ps, int len);
 
+void free_kanji(kanji k);
+
 void test_add_stroke(); 
 
 void print_kanji(kanji k);
