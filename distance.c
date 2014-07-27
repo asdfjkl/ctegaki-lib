@@ -6,6 +6,8 @@
 #include "kanji.h"
 #include "globals.h"
 
+#define PI 3.14159265
+
 // returns the direction between two points
 // direction is coded by an int (see globals.h)
 int direction(point a, point b) {
@@ -64,6 +66,30 @@ int endpoint(kanji a, int idx_a, kanji b, int idx_b) {
     
 }
 
+int endpoint_pc(kanji a, int idx_a, kanji b, int idx_b) {
+    
+         
+            
+         
+
+    
+    int last_a = a.c_points[idx_a]-1;
+    int last_b = b.c_points[idx_b]-1;
+    
+    int xx_a = a.xy[idx_a][last_a].x - a.xy[idx_a][0].x;
+    int yy_a = a.xy[idx_a][last_a].y - a.xy[idx_a][0].y;
+    
+    int xx_b = b.xy[idx_b][last_b].x - b.xy[idx_b][0].x;
+    int yy_b = b.xy[idx_b][last_b].y - b.xy[idx_b][0].y;
+    
+             double phi_a = atan2 ((double) yy_a,(double) xx_a) * 180 / PI;
+            double phi_b = atan2 ((double) yy_b,(double) xx_b) * 180 / PI;
+      
+            return (int) abs(phi_a - phi_b);
+    
+    
+}
+
 int endpoint_conc(kanji a, int idx_a, kanji b, int begin, int end) {
     
     int d_xs = abs(a.xy[idx_a][0].x - b.xy[begin][0].x);
@@ -94,6 +120,34 @@ int initial(kanji a, int idx_a, kanji b, int idx_b) {
                  abs(a.xy[idx_a][i].y - b.xy[idx_b][i].y));
 	}
 	return dist * (m*10/n);		
+}
+
+int initial_pc(kanji a, int idx_a, kanji b, int idx_b) {
+		
+    int m = a.c_points[idx_a];
+    int n = b.c_points[idx_b];
+	if(m < n) {
+		int temp = n;
+		n = m;
+		m = temp;
+	}
+	int dist = 0;
+	for(int i=1;i<n;i++) {
+            int xx_a = a.xy[idx_a][i].x - a.xy[idx_a][i-1].x;
+            int yy_a = a.xy[idx_a][i].y - a.xy[idx_a][i-1].y;
+            
+            int xx_b = b.xy[idx_b][i].x - b.xy[idx_b][i-1].x;
+            int yy_b = b.xy[idx_b][i].y - b.xy[idx_b][i-1].y;
+            
+            double phi_a = atan2 ((double) yy_a,(double) xx_a) * 180 / PI;
+            double phi_b = atan2 ((double) yy_b,(double) xx_b) * 180 / PI;
+            
+            // printf("xx_a %i, yy_a %i, phi_a %i\n",xx_a,yy_a,(int) phi_a);
+            
+            // dist += 10;
+            dist += (int) abs(phi_a - phi_b);
+	}
+	return dist *(m*10/n);		
 }
 
 int tau_of_i(int i, int m, int n) {

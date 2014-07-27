@@ -27,7 +27,9 @@ void insert_into(result rs[], int len, int weight, kanji k) {
     // printf("i: %i\n",i);
     rs[i].k = k;
     rs[i].weight = weight;
-}   
+}
+
+
 
 int compute_coarse_weight(smap sm, kanji larger, kanji smaller) {
     
@@ -38,6 +40,34 @@ int compute_coarse_weight(smap sm, kanji larger, kanji smaller) {
             // of smaller stroke
             int wi = (10 * endpoint(smaller, sm.m[i], larger, i))/
                       smaller.c_strokes;
+            // printf("(%i,%i): %i, smaller len: %i\n",i,sm.m[i],wi, smaller.c_strokes);
+            weight += wi;
+        }
+    }
+    return weight;
+}
+
+int compute_initial_weight(smap sm, kanji larger, kanji smaller) {
+    
+    int weight = 0;
+    for(int i=0;i<sm.length;i++) {
+        if(sm.m[i] != -1) {
+            int wi = initial(smaller, sm.m[i], larger, i);
+            // printf("(%i,%i): %i, smaller len: %i\n",i,sm.m[i],wi, smaller.c_strokes);
+            weight += wi;
+        }
+    }
+    return weight;
+}
+
+int compute_initial_weight_pc(smap sm, kanji larger, kanji smaller) {
+    
+    int weight = 0;
+    for(int i=0;i<sm.length;i++) {
+        if(sm.m[i] != -1) {
+            int wi = whole_delta(larger, i, smaller, sm.m[i], sm.m[i]);
+            // int wi = endpoint_pc(smaller, sm.m[i], larger, i);
+            // wi += (10*initial(smaller, sm.m[i], larger,i))/100;
             // printf("(%i,%i): %i, smaller len: %i\n",i,sm.m[i],wi, smaller.c_strokes);
             weight += wi;
         }
@@ -182,24 +212,22 @@ wchar_t* recognize(kanji unknown, kanjis data) {
             smap sm_init_wh = get_initial_map(larger, smaller, p_initial);
 
             smap sm_comp_wh;
-            if(unknown.c_strokes < 0) {
+            if (unknown.c_strokes < 4) {
                 sm_comp_wh = complete_map(sm_init_wh, larger, smaller, p_whole_delta);
             } else {
                 sm_comp_wh = complete_map(sm_init_wh, larger, smaller, p_whole);
             }
+            
             // print_smap(sm_comp_wh);
             int weight_i = 0;
-            if(unknown.c_strokes < 2) {
+            if(unknown.c_strokes < 4) {
                 weight_i = compute_fine_weight(sm_comp_wh, larger, smaller, true);
             } else {
                 weight_i = compute_fine_weight(sm_comp_wh, larger, smaller, false);
             }
  
+            // weight_i = compute_initial_weight(sm_comp_wh, larger, smaller);
             // wprintf(L"\n fine weight: %i for %lc ", weight_i, best_100[i].k.kji);
-            if(weight_i < 1000) {
-               //  wprintf(L"\n BEST %lc ", best_100[i].k);
-
-            }
             insert_into(best_10, 10, weight_i, best_100[i].k);
             free(sm_init_wh.m);
             //free(sm_comp_wh.m);

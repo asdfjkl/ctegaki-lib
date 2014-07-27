@@ -15,9 +15,14 @@ int direction(point a, point b);
 
 int endpoint(kanji a, int idx_a, kanji b, int idx_b);
 
+int endpoint_pc(kanji a, int idx_a, kanji b, int idx_b);
+
+
 int endpoint_conc(kanji a, int idx_a, kanji b, int begin, int end);
 
 int initial(kanji a, int idx_a, kanji b, int idx_b);
+
+int initial_pc(kanji a, int idx_a, kanji b, int idx_b);
 
 int whole(kanji a, int idx_a, kanji b, int begin, int end);
 

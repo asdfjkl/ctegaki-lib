@@ -46,7 +46,11 @@ int main() {
             kanji ex = extract_features(un_rnr, INTERVAL);
             wchar_t *res = recognize(ex, data);
             for (int i = 0; i < 10; i++) {
-                wprintf(L"%lc ", res[i]);
+
+                if (res[0] != un_rnr.kji) {
+                
+                wprintf(L"%lc ", res[i]);    
+                }
                 if (res[i] == un_rnr.kji) {
                     if (i == 0) {
                         in_zero++;
