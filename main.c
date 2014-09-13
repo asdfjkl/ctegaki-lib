@@ -14,13 +14,21 @@
 #include "recognizer.h"
 #include "tinydir.h"
 
+wchar_t* recognize_kanji(kanji unknown, kanjis dataset) {
+        kanji rastered = raster(unknown);
+        moment(rastered);
+        kanji rastered_moment = raster(rastered);
+        kanji features = extract_features(rastered_moment, INTERVAL);
+        return recognize(features, dataset);
+}
+
 int main() {
 
     setlocale(LC_ALL, "de_DE.UTF-8");
 
     tinydir_dir dir;
     int i;
-    tinydir_open_sorted(&dir, "./hiragana");
+    tinydir_open_sorted(&dir, "./test_data");
     kanjis data = init("data.dat");
 
     int in_zero = 0;
@@ -33,24 +41,24 @@ int main() {
         printf("%s ", file.name);
         if (!file.is_dir) {
             kanji unknown;
-            char *filename = (char*) malloc(strlen("./hiragana/") + strlen(file.name) + 1); //+1 for the zero-terminator
-            strcpy(filename, "./hiragana/");
+            char *filename = (char*) malloc(strlen("./test_data/") + strlen(file.name) + 1); //+1 for the zero-terminator
+            strcpy(filename, "./test_data/");
             strcat(filename, file.name);
             read_xml_file(filename, &unknown);
             printf("loaded: ");
             wprintf(L"%lc ", unknown.kji);
             kanji un_r = raster(unknown);
-            printf("recognized: ");
             moment(un_r);
             kanji un_rnr = raster(un_r);
             kanji ex = extract_features(un_rnr, INTERVAL);
             wchar_t *res = recognize(ex, data);
+            printf("recognized: %lc",res[0]);
             for (int i = 0; i < 10; i++) {
 
-                if (res[0] != un_rnr.kji) {
+                //if (res[0] != un_rnr.kji) {
                 
-                wprintf(L"%lc ", res[i]);    
-                }
+                //wprintf(L"%lc ", res[i]);    
+                //}
                 if (res[i] == un_rnr.kji) {
                     if (i == 0) {
                         in_zero++;

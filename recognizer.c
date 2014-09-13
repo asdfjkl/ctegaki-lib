@@ -212,7 +212,7 @@ wchar_t* recognize(kanji unknown, kanjis data) {
             smap sm_init_wh = get_initial_map(larger, smaller, p_initial);
 
             smap sm_comp_wh;
-            if (unknown.c_strokes < 4) {
+            if (unknown.c_strokes < 5) {
                 sm_comp_wh = complete_map(sm_init_wh, larger, smaller, p_whole_delta);
             } else {
                 sm_comp_wh = complete_map(sm_init_wh, larger, smaller, p_whole);
@@ -220,7 +220,12 @@ wchar_t* recognize(kanji unknown, kanjis data) {
             
             // print_smap(sm_comp_wh);
             int weight_i = 0;
-            if(unknown.c_strokes < 4) {
+            if(unknown.c_strokes < 5) {
+                wchar_t wc = strtol("30c8", NULL, 16);
+                if(unknown.kji == wc) {
+                    // wprintf(L"%lc and %lc",larger.kji, smaller.kji);
+                    // print_smap(sm_comp_wh);
+                }
                 weight_i = compute_fine_weight(sm_comp_wh, larger, smaller, true);
             } else {
                 weight_i = compute_fine_weight(sm_comp_wh, larger, smaller, false);
