@@ -13,8 +13,12 @@ int main() {
 
 	p00.x = 0;
 	p00.y = 0;
-	point[] stroke1 = { p00, p00, p00  };
-        printf("ok");
+	// point stroke1[] = { p00, p00, p00  };
+        point* stroke1 = (point*) malloc(3*sizeof(point));
+	stroke1[0] = p00;
+	stroke1[1] = p00;
+	stroke1[1] = p00;
+	printf("ok");
 	printf("\n");
 
 	add_stroke(&k,stroke1,3);

@@ -1,87 +1,30 @@
-# source files.
-SRC = ctegaki.c recognizer.c binary.c rasterize.c normalize.c strokemap.c kanjis.c kanji.c math_ext.c distance.c
- 
-OBJ = $(SRC:.c=.o)
- 
-OUT = ./libctegaki.a
- 
-# include directories
-#INCLUDES = -I/Library/Developer/CommandLineTools/usr/lib/clang/6.0/include 
-#INCLUDES = -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/5.1/include
-#INCLUDES = -I. -I../include/ -I/home/newhall/include -I../usr/include
- 
-# C++ compiler flags (-g -O2 -Wall)
-CCFLAGS = -g -static
- 
-# compiler
-CCC = g++
- 
-# library paths
-LIBS = -L../ -L/usr/local/lib -L./lib -lezxml
- 
-# compile flags
-LDFLAGS = -g
- 
-.SUFFIXES: .c
- 
-default: dep $(OUT)
- 
-.c.o:
-	$(CCC) $(INCLUDES) $(CCFLAGS) -c $< -o $@
- 
-$(OUT): $(OBJ)
-	ar rcs $(OUT) $(OBJ)
- 
-depend: dep
- 
-dep:
-	makedepend -- $(CFLAGS) -- $(INCLUDES) $(SRC)
- 
-clean:
-	rm -f $(OBJ) $(OUT)
-# DO NOT DELETE
+CC = g++
+AR = ar
+RM = rm -f
+CFLAGS = -Wall -O2
+OBJS = ctegaki.o recognizer.o binary.o rasterize.o normalize.o strokemap.o kanjis.o kanji.o math_ext.o distance.o 
+LIB = libctegaki.a
 
-ctegaki.o: /usr/include/stdio.h /usr/include/features.h /usr/include/libio.h
-ctegaki.o: /usr/include/_G_config.h /usr/include/wchar.h
-ctegaki.o: /usr/include/xlocale.h ezxml.h /usr/include/stdlib.h
-ctegaki.o: /usr/include/alloca.h /usr/include/fcntl.h /usr/include/time.h
-ctegaki.o: xml.h kanji.h /usr/include/stdint.h binary.h kanjis.h globals.h
-ctegaki.o: normalize.h /usr/include/locale.h distance.h strokemap.h
-ctegaki.o: rasterize.h recognizer.h tinydir.h /usr/include/errno.h
-ctegaki.o: /usr/include/string.h /usr/include/dirent.h /usr/include/libgen.h
-recognizer.o: kanji.h /usr/include/stdint.h /usr/include/features.h
-recognizer.o: /usr/include/stdlib.h /usr/include/alloca.h kanjis.h binary.h
-recognizer.o: /usr/include/wchar.h /usr/include/stdio.h /usr/include/libio.h
-recognizer.o: /usr/include/_G_config.h /usr/include/xlocale.h distance.h
-recognizer.o: strokemap.h math_ext.h
-binary.o: /usr/include/stdlib.h /usr/include/features.h /usr/include/alloca.h
-binary.o: /usr/include/stdio.h /usr/include/libio.h /usr/include/_G_config.h
-binary.o: /usr/include/wchar.h /usr/include/xlocale.h kanji.h
-binary.o: /usr/include/stdint.h kanjis.h
-rasterize.o: /usr/include/stdio.h /usr/include/features.h
-rasterize.o: /usr/include/libio.h /usr/include/_G_config.h
-rasterize.o: /usr/include/wchar.h /usr/include/xlocale.h
-rasterize.o: /usr/include/string.h kanji.h /usr/include/stdint.h
-rasterize.o: /usr/include/stdlib.h /usr/include/alloca.h math_ext.h globals.h
-rasterize.o: distance.h
-normalize.o: globals.h kanji.h /usr/include/stdint.h /usr/include/features.h
-normalize.o: /usr/include/stdlib.h /usr/include/alloca.h /usr/include/stdio.h
-normalize.o: /usr/include/libio.h /usr/include/_G_config.h
-normalize.o: /usr/include/wchar.h /usr/include/xlocale.h /usr/include/math.h
-strokemap.o: /usr/include/stdint.h /usr/include/features.h
-strokemap.o: /usr/include/stdlib.h /usr/include/alloca.h /usr/include/stdio.h
-strokemap.o: /usr/include/libio.h /usr/include/_G_config.h
-strokemap.o: /usr/include/wchar.h /usr/include/xlocale.h distance.h kanji.h
-strokemap.o: math_ext.h
-kanjis.o: kanji.h /usr/include/stdint.h /usr/include/features.h
-kanjis.o: /usr/include/stdlib.h /usr/include/alloca.h
-kanji.o: /usr/include/stdio.h /usr/include/features.h /usr/include/libio.h
-kanji.o: /usr/include/_G_config.h /usr/include/wchar.h /usr/include/xlocale.h
-kanji.o: /usr/include/stdint.h /usr/include/stdlib.h /usr/include/alloca.h
-kanji.o: /usr/include/string.h math_ext.h
-math_ext.o: /usr/include/math.h /usr/include/features.h
-distance.o: /usr/include/stdint.h /usr/include/features.h
-distance.o: /usr/include/stdlib.h /usr/include/alloca.h /usr/include/math.h
-distance.o: /usr/include/stdio.h /usr/include/libio.h
-distance.o: /usr/include/_G_config.h /usr/include/wchar.h
-distance.o: /usr/include/xlocale.h math_ext.h kanji.h globals.h
+all: $(LIB)
+
+$(LIB): $(OBJS)
+	$(AR) rcs $(LIB) $(OBJS)
+
+debug: all
+
+ctegaki.o: ctegaki.h ctegaki.c
+recognizer.o: recognizer.h recognizer.c
+binary.o: binary.h binary.c
+rasterize.o: rasterize.h rasterize.c
+normalize.o: normalize.h normalize.c
+strokemap.o: strokemap.h strokemap.c
+kanjis.o: kanjis.h kanjis.c
+kanji.o: kanji.h kanji.c
+math_ext.o: math_ext.h math_ext.c
+distance.o: distance.h distance.c
+
+.c.o:
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+clean:
+	$(RM) $(OBJS) $(LIB) $(TEST) *~

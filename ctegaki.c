@@ -23,6 +23,6 @@ wchar_t* recognize_kanji(kanji unknown, kanjis dataset) {
 }
 
 kanjis load_data(char* filename) {
-        kanjis data = init("data.dat");
+        kanjis data = init(filename);
         return data;
 }

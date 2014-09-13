@@ -8,13 +8,11 @@
 #ifndef CTEGAKI_H
 #define	CTEGAKI_H
 
-#include "ezxml.h"
 #include "xml.h"
 #include "binary.h"
 #include "kanji.h"
 #include "kanjis.h"
 #include "globals.h"
-#include "normalize.h"
 #include <wchar.h>
 #include <locale.h>
 #include "distance.h"
