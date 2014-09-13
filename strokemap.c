@@ -3,7 +3,6 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "distance.h"
-#include "xml.h"
 #include "math_ext.h"
 
 struct smap {
@@ -214,6 +213,7 @@ smap complete_map(smap sm, kanji larger, kanji smaller,
     return sm;
 }
 
+/*
 void test_cases() {
     
         kanji k2;
@@ -226,9 +226,9 @@ void test_cases() {
         read_xml_file("k22.xml",&k22);
         read_xml_file("k23.xml",&k23);
         
-        /* skip feature extraction for these 
+         skip feature extraction for these 
          * specially prepared kanji
-         */
+         
         printf("k2:\n");
         print_kanji(k2);
         printf("k21:\n");
@@ -238,9 +238,9 @@ void test_cases() {
         printf("k23:\n");
         print_kanji(k23);
         
-        /* initialize with endpoint distance
+         initialize with endpoint distance
          * and complete with endpoint distance
-         */
+         
         printf("endpoint initi + endpoint completion\n");
         
         int (*p_endpoint) (kanji, int, kanji, int);
@@ -287,9 +287,9 @@ void test_cases() {
         // 0  1  2 3 
         // 0  1  1 1
         
-        /* initialize with initial distance 
+         initialize with initial distance 
          * and complete with whole distance
-         */
+         
         printf("initial + whole completion\n");
 
         int (*p_initial) (kanji, int, kanji, int);
@@ -336,7 +336,7 @@ void test_cases() {
         // 0  1  2 3 
         // 0  1  1 1     
 }
-
+*/
 
 
 int compute_weight(smap sm, kanji larger, kanji smaller, 

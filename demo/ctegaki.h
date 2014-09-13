@@ -5,14 +5,9 @@
  * Created on 13. September 2014, 17:52
  */
 
-#ifndef MAIN_H
-#define	MAIN_H
+#ifndef CTEGAKI_H
+#define	CTEGAKI_H
 
-#ifdef	__cplusplus
-extern "C" {
-#endif
-    
-#include<stdio.h>
 #include "ezxml.h"
 #include "xml.h"
 #include "binary.h"
@@ -28,13 +23,8 @@ extern "C" {
 #include "recognizer.h"
 #include "tinydir.h"
 
-wchar_t* recognize_kanji(kanji unknown, kanjis dataset);
-kanjis load_data(char* filename);
-
-
-#ifdef	__cplusplus
-}
-#endif
+extern wchar_t* recognize_kanji(kanji unknown, kanjis dataset);
+extern kanjis load_data(char* filename);
 
 #endif	/* MAIN_H */
 
