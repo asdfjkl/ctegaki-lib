@@ -1,6 +1,7 @@
 #include "ctegaki.h"
 #include <wchar.h>
 #include <locale.h>
+#include <stdio.h>
 
 int main() {
 	setlocale(LC_ALL, "en_US.UTF-8");

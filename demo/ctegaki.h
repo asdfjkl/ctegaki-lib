@@ -21,8 +21,8 @@
 #include "recognizer.h"
 #include "tinydir.h"
 
-extern wchar_t* recognize_kanji(kanji unknown, kanjis dataset);
-extern kanjis load_data(char* filename);
+wchar_t* recognize_kanji(kanji unknown, kanjis dataset);
+kanjis load_data(char* filename);
 
 #endif	/* MAIN_H */
 
