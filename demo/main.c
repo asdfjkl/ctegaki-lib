@@ -5,7 +5,7 @@
 
 int main() {
 	setlocale(LC_ALL, "de_DE.UTF-8");
-/*
+
 	kanjis data = load_data("data.dat");
 	kanji k;
 	k.c_strokes = 0;
@@ -56,7 +56,7 @@ int main() {
 	for(int i=0;i<10;i++) { 
 		wprintf(L"%lc ",results[i]);
 	}
-*/
+
 	// printf("\n");
 	wchar_t wc = L'\x5be1';
 	// printf("before\n");
