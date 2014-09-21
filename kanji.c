@@ -55,17 +55,17 @@ void add_stroke(kanji* k, point* ps, int len) {
     
 
     // printf("increasing 2d array... \n");
-    for(int i=0;i<k->c_strokes;i++) {
-        // printf("address of *k.xy[%i]: %i\n",i,k->xy[i]);
-    }
+    // for(int i=0;i<k->c_strokes;i++) {
+    //    printf("address of *k.xy[%i]: %i\n",i,k->xy[i]);
+    // }
 
     // increase 2dim array by adding one more space for pointer
     (*k).xy = (point**) realloc((*k).xy,((*k).c_strokes + 1) * sizeof (point*));
     // printf("after realloc of 2d array... \n");
 
-    for(int i=0;i<k->c_strokes+1;i++) {
-        // printf("address of *k.xy[%i]: %i\n",i,k->xy[i]);
-    }
+    // for(int i=0;i<k->c_strokes+1;i++) {
+    //    printf("address of *k.xy[%i]: %i\n",i,k->xy[i]);
+    // }
 
 
     // insert new array at end
