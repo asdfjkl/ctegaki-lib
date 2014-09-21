@@ -21,6 +21,9 @@ and yet they will still be recognized. It is thus suited
 to be used by beginners of the language. 
 
 ctegaki is a C library and provides a simple C interface.
+Supported platforms are Linux and Mac OS X. Since the library
+is written in C, building and compiling should also work on
+Windows, but as of now, it has not been tested yet.
 
 # Setup
 
