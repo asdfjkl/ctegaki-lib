@@ -2,14 +2,14 @@
 
 ctegaki is a simple, yet powerful Japanese online
 handwriting recognition engine.
-
 Here online means "recognize as you write", as 
-opposed of offline recognition/OCR.
+opposed to offline recognition/OCR.
 
 It is thus suitable in a dictionary tool (to look up
-kanji), or as an input keyboard for a tablet.
+kanji), or as the backend to an input keyboard 
+for a tablet.
 
-Compared to other libraries, cTegaki provides
+Compared to other libraries, ctegaki provides
 character recognition that is independent of
 
 * stroke order, and
@@ -17,13 +17,28 @@ character recognition that is independent of
 
 This means that you can write kanji with an incorrect
 stroke number and stroke order (up to a certain extent),
-and yet they will still be recognized. It is thus suited
-to be used by beginners of the language. 
+and yet the character will still be recognized. It is 
+thus suited to be used by beginners of the language. 
+
+Currently, ctegaki recognizes the following character
+sets:
+
+* hiragana
+* katakana
+* all [Joyou](http://en.wikipedia.org/wiki/J%C5%8Dy%C5%8D_kanji)
+
+It is planned to also support all [Jinmeiyo](http://en.wikipedia.org/wiki/Jinmeiy%C5%8D_kanji) kanji. 
 
 ctegaki is a C library and provides a simple C interface.
 Supported platforms are Linux and Mac OS X. Since the library
 is written in C, building and compiling should also work on
 Windows, but as of now, it has not been tested yet.
+
+# License
+
+Copyright (c) 2014, Dominik Klein. ctegaki is available under the 
+FreeBSD license ("Simplified BSD License"). See the LICENSE
+file contained in both the ctegaki and convert repository.
 
 # Setup
 
@@ -33,10 +48,12 @@ three steps:
 1. Compiling. Note that on OSX, clang is recommended.
    You might need to symbolically link g++ to clang
    or modify the makefile
-2. (optional) If no compressed binary pattern data
+2. (optional: Binary Pattern Generation) If no compressed binary 
+   pattern data
    exist for your platform, convert the provided xml
    pattern data to binary form with the converter tool
-3. including relevant headers, and building your project.
+3. Adding to your project, i.e. including relevant headers, 
+   setting up and building your project.
 
 ## Compiling ctegaki
 
@@ -54,7 +71,7 @@ make clean
 make
 ```
 
-You know have a static library build libctegaki.a
+You now have a static library build libctegaki.a
 
 ## (optional, make platform dependent binary data)
 
@@ -110,7 +127,7 @@ You now have platform dependent binary file data.dat
 
 ## Use it in your project
 
-Supplied with the library is a (very rudiment) demo on
+Supplied with the library is a (very rudimentary) demo on
 how to use the library in your project. See ./demo/main.c
 
 To compile go to the directioy
