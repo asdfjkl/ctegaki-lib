@@ -1,6 +1,6 @@
 # Introduction
 
-cTegaki is a simple, yet powerful Japanese online
+ctegaki is a simple, yet powerful Japanese online
 handwriting recognition engine.
 
 Here online means "recognize as you write", as 
@@ -60,10 +60,13 @@ You know have a static library build libctegaki.a
 
 Right now, binary data are provided for
 
-* Mac OSX 64 bit, Intel (data_osx.dat)
+* Mac OSX 64 bit, Intel (data_osx64_intel.dat)
 * Linux x86 (data_linux_x86.dat) 
 
-Clone the converter tool
+If your platform is one of the above, you are done here
+and can step to the next section. Otherwise you need
+to first generate platform dependent binary recognition
+data with the converter tool. Clone the converter tool
 
 ```
 git clone https://github.com/asdfjkl/convert.git
