@@ -17,8 +17,8 @@ character recognition that is independent of
 
 This means that you can write kanji with an incorrect
 stroke number and stroke order (up to a certain extent),
-and yet the character will still be recognized. It  
-can thus be useful for beginners, who are
+and yet the character will still be recognized. It can thus 
+be useful for beginners, who are
 still learning how to correctly write kanji, or 
 advanced learners or native speakers, who usually
 tend to combine several strokes ("semi-cursive"
