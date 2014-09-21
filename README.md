@@ -44,7 +44,9 @@ Clone the ctegaki repo
 Build
 
 ` cd ctegaki-lib
+
 ` make clean
+
 ` make
 
 You know have a static library build libctegaki.a
