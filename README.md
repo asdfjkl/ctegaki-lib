@@ -174,7 +174,7 @@ k.xy = 0;
 ```
 
 As an example, we recognize the character for "day". See
-[day](http://en.wiktionary.org/wiki/%E6%97%A5)
+[day 日](http://en.wiktionary.org/wiki/%E6%97%A5)
 
 We characterize this character by six points, and use
 these six points to create four strokes.
@@ -191,6 +191,7 @@ this is not optimal
 point p1,p2,p3,p4,p5,p6;
 p1.x = 0;
 p1.y = 0;
+... and so on
 ```
 
 Next we create the first stroke:
@@ -240,6 +241,6 @@ for(int i=0;i<10;i++) {
 
 Tricky point here: Do not try to use both printf
 and wprintf in your program. Likely, no output
-from printf will be given (undefined compiler behaviour,
+from wprintf will be given (undefined compiler behaviour,
 worked for me in OS X / Clang, but not in Linux/gcc).
 
