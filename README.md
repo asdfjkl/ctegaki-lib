@@ -39,15 +39,17 @@ three steps:
 
 Clone the ctegaki repo
 
-` git clone https://github.com/asdfjkl/ctegaki-lib.git
+```
+git clone https://github.com/asdfjkl/ctegaki-lib.git
+```
 
 Build
 
-` cd ctegaki-lib
-
-` make clean
-
-` make
+```
+cd ctegaki-lib
+make clean
+make
+```
 
 You know have a static library build libctegaki.a
 
@@ -60,33 +62,43 @@ Right now, binary data are provided for
 
 Clone the converter tool
 
-` git clone https://github.com/asdfjkl/convert.git
+```
+git clone https://github.com/asdfjkl/convert.git
+```
 
 Build the XML library ezxml, which is needed for
 the converter tool:
 
-` cd convert
-` cd ezxml
-` make clean
-` make
+```
+cd convert
+cd ezxml
+make clean
+make
+```
 
 Copy the resulting static lib to convert/lib/ezxml.a:
 
-` cd ..
-` mkdir lib
-` cd lib
-` cp ../ezxml/libezxml.a .
-` cd ..
+```
+cd ..
+mkdir lib
+cd lib
+cp ../ezxml/libezxml.a .
+cd ..
+```
 
 Finally, compile the converter tool:
 
-` make clean
-` make
+```
+make clean
+make
+```
 
 and convert the provided xml pattern data to a binary
 format for your platform:
 
-` ./convert -i ./xmls
+```
+./convert -i ./xmls
+```
 
 You now have platform dependent binary file data.dat
 
@@ -97,19 +109,25 @@ how to use the library in your project. See ./demo/main.c
 
 To compile go to the directioy
 
-` cd ctegaki-lib/demo
+```
+cd ctegaki-lib/demo
+```
 
 Copy libctegaki.a and data.dat
 
-` mkdir lib
-` cp ../libctegaki.a ./lib
-` cp ../../convert/data.dat .
+```
+mkdir lib
+cp ../libctegaki.a ./lib
+cp ../../convert/data.dat .
+```
 
 Build and run:
 
-` make clean
-` make
-` ./tegaki
+```
+make clean
+make
+./tegaki
+```
 
 The output should be ten Japanese characters.
 
@@ -119,7 +137,9 @@ Let's take a look at demo/main.c
 First we set the locale to an UTF-8 compatible one,
 in order to later print to the output:
 
-` setlocale(LC_ALL, "de_DE.UTF-8");
+```
+setlocale(LC_ALL, "de_DE.UTF-8");
+```
 
 Next we "build" a kanji. A kanji is basically a 
 number of strokes, which itself consist of points, i.e.
@@ -134,14 +154,18 @@ see the xml raw data in /convert/xmls
 
 Next we load the binary data file:
 
-` kanjis data = load_data("data.dat");
+```
+kanjis data = load_data("data.dat");
+```
 
 and init a kanji. The kanji is our input.
 
-` kanji k;
-` k.c_strokes = 0;
-` k.c_points = 0;
-` k.xy = 0;
+```
+kanji k;
+k.c_strokes = 0;
+k.c_points = 0;
+k.xy = 0;
+```
 
 As an example, we recognize the character for "day". See
 [day](http://en.wiktionary.org/wiki/%E6%97%A5)
@@ -157,13 +181,17 @@ presentation, and the kanji is not
 centered at all. Recognition still succeeds, but in general,
 this is not optimal
 
-` point p1,p2,p3,p4,p5,p6;
-` p1.x = 0;
-` p1.y = 0;
+```
+point p1,p2,p3,p4,p5,p6;
+p1.x = 0;
+p1.y = 0;
+```
 
 Next we create the first stroke:
 
-` point* stroke1 = (point*) malloc(2*sizeof(point));
+```
+point* stroke1 = (point*) malloc(2*sizeof(point));
+```
 
 Space is allocated for two points. Note that in general, strokes
 should be exactly as long as the points they contain. In your program
@@ -175,26 +203,34 @@ zeros at the end, as this will affect the recognition.
 
 Points are added to the first stroke:
 
-` stroke1[0] = p1;
-` stroke1[1] = p4;
+```
+stroke1[0] = p1;
+stroke1[1] = p4;
+```
 
 and the stroke is added to the kanji. The second
 argument denots the length of the stroke, i.e.
 the number of points.
 
-` add_stroke(&k,stroke1,2);
+```
+add_stroke(&k,stroke1,2);
+```
 
 This continues, until we build up our kanji. Time
 for recognition!
 
-` wchar_t *results = recognize_kanji(k,data);
+```
+wchar_t *results = recognize_kanji(k,data);
+```
 
 The result will _always_ a pointer to the best
 ten wchar's. We can print out the recognition result:
 
-` for(int i=0;i<10;i++) {
-`     wprintf(L"%lc ",results[i]);
-` }
+```
+for(int i=0;i<10;i++) {
+    wprintf(L"%lc ",results[i]);
+}
+```
 
 Tricky point here: Do not try to use both printf
 and wprintf in your program. Likely, no output
