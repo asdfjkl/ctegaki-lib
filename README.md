@@ -17,15 +17,19 @@ character recognition that is independent of
 
 This means that you can write kanji with an incorrect
 stroke number and stroke order (up to a certain extent),
-and yet the character will still be recognized. It is 
-thus suited to be used by beginners of the language. 
+and yet the character will still be recognized. It  
+can thus be useful for beginners, who are
+still learning how to correctly write kanji, or 
+advanced learners or native speakers, who usually
+tend to combine several strokes ("semi-cursive"
+writing style). 
 
 Currently, ctegaki recognizes the following character
 sets:
 
 * hiragana
 * katakana
-* all [Joyou](http://en.wikipedia.org/wiki/J%C5%8Dy%C5%8D_kanji)
+* all [Joyou](http://en.wikipedia.org/wiki/J%C5%8Dy%C5%8D_kanji) kanji
 
 It is planned to also support all [Jinmeiyo](http://en.wikipedia.org/wiki/Jinmeiy%C5%8D_kanji) kanji. 
 
